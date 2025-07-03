@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOUVELLE | Luxury Fashion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://web3forms.com/client/script.js" async defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Custom CSS */
+        :root {
+            --primary: #1a1a1a;
+            --secondary: #f5f5f5;
+            --accent: #c19a6b;
+            --light-accent: #e8d9c5;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--secondary);
+            color: var(--primary);
+            overflow-x: hidden;
+        }
+        
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .hero-section {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), 
+                        url('https://images.unsplash.com/photo-1469334031218-e382a71b716b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        .product-card {
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .product-card .product-info {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .product-card:hover .product-info {
+            opacity: 1;
+        }
+        
+        .collection-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .collection-card img {
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .collection-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .collection-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 50%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .collection-card:hover::after {
+            opacity: 1;
+        }
+        
+        .nav-link::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .cart-count {
+            top: -8px;
+            right: -8px;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+        }
+        
+        .dropdown-menu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        
+        .mobile-menu-item {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+        }
+        
+        .mobile-menu.open .mobile-menu-item {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .mobile-menu.open .mobile-menu-item:nth-child(1) { transition-delay: 0.1s; }
+        .mobile-menu.open .mobile-menu-item:nth-child(2) { transition-delay: 0.2s; }
+        .mobile-menu.open .mobile-menu-item:nth-child(3) { transition-delay: 0.3s; }
+        .mobile-menu.open .mobile-menu-item:nth-child(4) { transition-delay: 0.4s; }
+        .mobile-menu.open .mobile-menu-item:nth-child(5) { transition-delay: 0.5s; }
+        
+        .scroll-down {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+        
+        .text-stroke {
+            -webkit-text-stroke: 1px var(--accent);
+            color: transparent;
+        }
+        
+        .marquee {
+            animation: marquee 20s linear infinite;
+        }
+        
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        .custom-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.5rem center;
+            background-size: 1.2em;
+        }
+        
+        .size-selector input:checked + label {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .newsletter-input:focus {
+            box-shadow: 0 0 0 2px var(--accent);
+        }
+        
+        .loader {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero-section {
+                height: 90vh;
+                background-attachment: scroll;
+            }
+            
+            .hero-title {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white bg-opacity-90 backdrop-blur-sm border-b border-gray-100">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <a href="#" class="text-2xl font-serif font-bold tracking-tight">NOUVELLE</a>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex items-center space-x-8">
+                    <div class="dropdown relative">
+                        <a href="#" class="nav-link text-sm uppercase tracking-wider flex items-center">
+                            Shop <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </a>
+                        <div class="dropdown-menu absolute top-full left-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2 z-50 border border-gray-100">
+                            <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-50">New Arrivals</a>
+                            <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-50">Women</a>
+                            <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-50">Men</a>
+                            <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-50">Accessories</a>
+                            <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-50">Sale</a>
+                        </div>
+                    </div>
+                    <a href="#" class="nav-link text-sm uppercase tracking-wider">Collections</a>
+                    <a href="#" class="nav-link text-sm uppercase tracking-wider">About</a>
+                    <a href="#" class="nav-link text-sm uppercase tracking-wider">Journal</a>
+                    
+                    <div class="flex items-center space-x-4 ml-8">
+                        <a href="#" class="relative">
+                            <i class="fas fa-search text-lg"></i>
+                        </a>
+                        <a href="#" class="relative">
+                            <i class="fas fa-user text-lg"></i>
+                        </a>
+                        <a href="#" class="relative">
+                            <i class="fas fa-shopping-bag text-lg"></i>
+                            <span class="cart-count absolute flex items-center justify-center bg-black text-white rounded-full">3</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button class="lg:hidden focus:outline-none" id="mobile-menu-button">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu fixed inset-0 bg-white z-40 pt-24 px-6 overflow-y-auto" id="mobile-menu">
+        <div class="flex flex-col space-y-8">
+            <a href="#" class="mobile-menu-item text-2xl font-serif">Shop</a>
+            <a href="#" class="mobile-menu-item text-2xl font-serif">Collections</a>
+            <a href="#" class="mobile-menu-item text-2xl font-serif">About</a>
+            <a href="#" class="mobile-menu-item text-2xl font-serif">Journal</a>
+            <a href="#" class="mobile-menu-item text-2xl font-serif">Contact</a>
+        </div>
+        
+        <div class="absolute bottom-8 left-6 right-6">
+            <div class="flex justify-between items-center border-t border-gray-200 pt-6">
+                <div class="flex space-x-4">
+                    <a href="#"><i class="fab fa-instagram text-xl"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f text-xl"></i></a>
+                    <a href="#"><i class="fab fa-twitter text-xl"></i></a>
+                </div>
+                <div>
+                    <a href="#" class="text-sm">EN</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section flex items-center justify-center text-white relative">
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <h1 class="hero-title font-serif text-5xl md:text-7xl lg:text-8xl mb-6 leading-tight">
+                <span class="block">ELEVATED</span>
+                <span class="block">ESSENTIALS</span>
+            </h1>
+            <p class="text-lg md:text-xl max-w-2xl mx-auto mb-10">
+                Discover our Autumn/Winter collection - where timeless elegance meets contemporary design.
+            </p>
+            <a href="#" class="inline-block border-2 border-white px-8 py-3 font-medium tracking-wider uppercase hover:bg-white hover:text-black transition duration-300">
+                Shop The Collection
+            </a>
+            
+            <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 scroll-down">
+                <i class="fas fa-chevron-down text-xl animate-bounce"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Marquee Banner -->
+    <div class="bg-black text-white py-4 overflow-hidden">
+        <div class="flex whitespace-nowrap">
+            <div class="marquee flex items-center">
+                <span class="mx-8 text-sm uppercase tracking-widest">Free shipping on all orders over $200</span>
+                <span class="mx-8 text-sm uppercase tracking-widest">New collection now available</span>
+                <span class="mx-8 text-sm uppercase tracking-widest">Sustainable luxury since 2010</span>
+                <span class="mx-8 text-sm uppercase tracking-widest">Free shipping on all orders over $200</span>
+                <span class="mx-8 text-sm uppercase tracking-widest">New collection now available</span>
+                <span class="mx-8 text-sm uppercase tracking-widest">Sustainable luxury since 2010</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Featured Collections -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="font-serif text-3xl md:text-4xl mb-4">Curated Collections</h2>
+                <p class="max-w-2xl mx-auto text-gray-600">Explore our handpicked selections for every occasion</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Collection 1 -->
+                <div class="collection-card h-96 rounded-lg overflow-hidden relative group">
+                    <img src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" 
+                         alt="Women's Collection" class="w-full h-full object-cover">
+                    <div class="absolute bottom-0 left-0 p-6 z-10 text-white">
+                        <h3 class="text-2xl font-serif mb-2">Women's</h3>
+                        <p class="text-sm mb-4">Timeless pieces for the modern woman</p>
+                        <a href="#" class="text-sm uppercase tracking-wider border-b border-white pb-1">Explore</a>
+                    </div>
+                </div>
+                
+                <!-- Collection 2 -->
+                <div class="collection-card h-96 rounded-lg overflow-hidden relative group">
+                    <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=736&q=80" 
+                         alt="Men's Collection" class="w-full h-full object-cover">
+                    <div class="absolute bottom-0 left-0 p-6 z-10 text-white">
+                        <h3 class="text-2xl font-serif mb-2">Men's</h3>
+                        <p class="text-sm mb-4">Refined essentials for the discerning man</p>
+                        <a href="#" class="text-sm uppercase tracking-wider border-b border-white pb-1">Explore</a>
+                    </div>
+                </div>
+                
+                <!-- Collection 3 -->
+                <div class="collection-card h-96 rounded-lg overflow-hidden relative group">
+                    <img src="https://cdn.pixabay.com/photo/2022/12/17/04/27/men-png-7660946_1280.jpg" 
+                         alt="Accessories" class="w-full h-full object-cover">
+                    <div class="absolute bottom-0 left-0 p-6 z-10 text-white">
+                        <h3 class="text-2xl font-serif mb-2">Accessories</h3>
+                        <p class="text-sm mb-4">The perfect finishing touches</p>
+                        <a href="#" class="text-sm uppercase tracking-wider border-b border-white pb-1">Explore</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="font-serif text-3xl md:text-4xl mb-4">Featured Pieces</h2>
+                <p class="max-w-2xl mx-auto text-gray-600">This season's most coveted items</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Product 1 -->
+                <div class="product-card group">
+                    <div class="relative overflow-hidden mb-4">
+                        <img src="https://cdn.pixabay.com/photo/2022/10/28/02/20/night-7552210_1280.jpg" 
+                             alt="Cashmere Sweater" class="w-full h-96 object-cover">
+                        <div class="product-info absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center">
+                            <button class="quick-view-btn bg-white text-black px-6 py-2 font-medium hover:bg-gray-100 transition" data-product="1">
+                                Quick View
+                            </button>
+                        </div>
+                        <div class="absolute top-4 right-4">
+                            <button class="bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="font-medium mb-1">Luxe Cashmere Sweater</h3>
+                        <p class="text-gray-600 mb-2">Winter Collection</p>
+                        <p class="font-serif text-lg">$295</p>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product-card group">
+                    <div class="relative overflow-hidden mb-4">
+                        <img src="https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1259&q=80" 
+                             alt="Wool Coat" class="w-full h-96 object-cover">
+                        <div class="product-info absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center">
+                            <button class="quick-view-btn bg-white text-black px-6 py-2 font-medium hover:bg-gray-100 transition" data-product="2">
+                                Quick View
+                            </button>
+                        </div>
+                        <div class="absolute top-4 right-4">
+                            <button class="bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="font-medium mb-1">Tailored Wool Coat</h3>
+                        <p class="text-gray-600 mb-2">Winter Collection</p>
+                        <p class="font-serif text-lg">$450</p>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product-card group">
+                    <div class="relative overflow-hidden mb-4">
+                        <img src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" 
+                             alt="Silk Blouse" class="w-full h-96 object-cover">
+                        <div class="product-info absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center">
+                            <button class="quick-view-btn bg-white text-black px-6 py-2 font-medium hover:bg-gray-100 transition" data-product="3">
+                                Quick View
+                            </button>
+                        </div>
+                        <div class="absolute top-4 right-4">
+                            <button class="bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="font-medium mb-1">Silk Satin Blouse</h3>
+                        <p class="text-gray-600 mb-2">Essentials</p>
+                        <p class="font-serif text-lg">$185</p>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product-card group">
+                    <div class="relative overflow-hidden mb-4">
+                        <img src="https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=735&q=80" 
+                             alt="Leather Bag" class="w-full h-96 object-cover">
+                        <div class="product-info absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center">
+                            <button class="quick-view-btn bg-white text-black px-6 py-2 font-medium hover:bg-gray-100 transition" data-product="4">
+                                Quick View
+                            </button>
+                        </div>
+                        <div class="absolute top-4 right-4">
+                            <button class="bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="font-medium mb-1">Italian Leather Tote</h3>
+                        <p class="text-gray-600 mb-2">Accessories</p>
+                        <p class="font-serif text-lg">$380</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="inline-block border border-black px-8 py-3 font-medium tracking-wider uppercase hover:bg-black hover:text-white transition duration-300">
+                    View All Products
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brand Story -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-12 lg:mb-0 lg:pr-12">
+                    <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                         alt="Our Studio" class="w-full h-auto rounded-lg shadow-lg">
+                </div>
+                <div class="lg:w-1/2">
+                    <h2 class="font-serif text-3xl md:text-4xl mb-6">Our Ethos</h2>
+                    <p class="text-gray-600 mb-6">
+                        Founded in Milan in 2010, NOUVELLE represents the pinnacle of understated luxury. 
+                        Our philosophy centers on creating garments that transcend trends, focusing instead 
+                        on impeccable craftsmanship, sustainable practices, and timeless design.
+                    </p>
+                    <p class="text-gray-600 mb-8">
+                        Each piece is thoughtfully designed in our Milan atelier and produced in limited quantities 
+                        by skilled artisans using only the finest materials. We believe in fashion that lasts - 
+                        both in quality and style.
+                    </p>
+                    <a href="#" class="inline-block border-b border-black pb-1 font-medium tracking-wider uppercase">
+                        Discover Our Story
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Journal Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="font-serif text-3xl md:text-4xl mb-4">From The Journal</h2>
+                <p class="max-w-2xl mx-auto text-gray-600">Insights on style, sustainability, and the art of living well</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Journal 1 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition duration-300">
+                    <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                         alt="Journal Post" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <span class="text-xs uppercase tracking-wider text-gray-500">Style Guide</span>
+                        <h3 class="font-serif text-xl my-3">Building a Capsule Wardrobe</h3>
+                        <p class="text-gray-600 mb-4 text-sm">
+                            How to curate a collection of timeless pieces that work seamlessly together...
+                        </p>
+                        <a href="#" class="text-sm font-medium tracking-wider uppercase border-b border-black pb-1">Read More</a>
+                    </div>
+                </div>
+                
+                <!-- Journal 2 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition duration-300">
+                    <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" 
+                         alt="Journal Post" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <span class="text-xs uppercase tracking-wider text-gray-500">Sustainability</span>
+                        <h3 class="font-serif text-xl my-3">The Future of Ethical Fashion</h3>
+                        <p class="text-gray-600 mb-4 text-sm">
+                            Exploring innovative materials and practices shaping the next generation of luxury...
+                        </p>
+                        <a href="#" class="text-sm font-medium tracking-wider uppercase border-b border-black pb-1">Read More</a>
+                    </div>
+                </div>
+                
+                <!-- Journal 3 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition duration-300">
+                    <img src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" 
+                         alt="Journal Post" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <span class="text-xs uppercase tracking-wider text-gray-500">Spotlight</span>
+                        <h3 class="font-serif text-xl my-3">Meet Our Artisans</h3>
+                        <p class="text-gray-600 mb-4 text-sm">
+                            The skilled hands behind our collections - a glimpse into traditional craftsmanship...
+                        </p>
+                        <a href="#" class="text-sm font-medium tracking-wider uppercase border-b border-black pb-1">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form Section -->
+  <!-- Contact Form Section -->
+<section class="py-20 bg-white" id="contact-section">
+  <div class="container mx-auto px-6">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="font-serif text-3xl md:text-4xl mb-4">Inquire About a Product</h2>
+        <p class="max-w-2xl mx-auto text-gray-600">Have questions about a specific item? Our style consultants are here to help.</p>
+      </div>
+
+      <form action="https://api.web3forms.com/submit" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-8" id="product-inquiry-form">
+        <!-- Web3Forms access key -->
+        <input type="hidden" name="access_key" value="c372e842-bb92-47db-8a5a-9995c28179be">
+
+        <!-- Optional redirect after submission -->
+        <!-- <input type="hidden" name="redirect" value="https://yourwebsite.com/thank-you.html"> -->
+
+        <div class="md:col-span-2">
+          <h3 class="font-serif text-xl mb-4">Product Information</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label for="product-name" class="block text-sm font-medium text-gray-700 mb-1">Product Name</label>
+              <input type="text" id="product-name" name="Product Name" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-black">
+            </div>
+            <div>
+              <label for="product-id" class="block text-sm font-medium text-gray-700 mb-1">Product ID (if known)</label>
+              <input type="text" id="product-id" name="Product ID" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-black">
+            </div>
+          </div>
+        </div>
+
+        <div class="md:col-span-2">
+          <h3 class="font-serif text-xl mb-4">Your Information</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label for="first-name" class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+              <input type="text" id="first-name" name="First Name" required class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-black">
+            </div>
+            <div>
+              <label for="last-name" class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+              <input type="text" id="last-name" name="Last Name" required class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-black">
+            </div>
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+              <input type="email" id="email" name="Email" required class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-black">
+            </div>
+            <div>
+              <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+              <input type="tel" id="phone" name="Phone" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-black">
+            </div>
+          </div>
+        </div>
+
+        <div class="md:col-span-2">
+          <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Your Inquiry</label>
+          <textarea id="message" name="Message" rows="4" required class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-black"></textarea>
+        </div>
+
+        <div class="md:col-span-2">
+          <button type="submit" class="w-full bg-black text-white px-6 py-3 font-medium tracking-wider uppercase hover:bg-gray-800 transition duration-300">
+            Submit Inquiry
+          </button>
+        </div>
+
+        <div class="md:col-span-2 text-center text-sm text-gray-500">
+          <p>We'll respond to your inquiry within 24 hours. For immediate assistance, please call +1 (555) 123-4567.</p>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+<div id="success-message" class="hidden text-green-600 text-center mt-6">Thank you! Your message has been sent.</div>
+
+
+
+    <!-- Newsletter -->
+    <section class="py-20 bg-black text-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="font-serif text-3xl md:text-4xl mb-6">Join Our World</h2>
+                <p class="text-gray-300 mb-8">
+                    Subscribe to receive updates on new collections, exclusive offers, and style inspiration.
+                </p>
+                
+                <form class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
+                    <input type="email" placeholder="Your email address" 
+                           class="newsletter-input flex-grow px-4 py-3 bg-transparent border border-gray-600 focus:border-white focus:outline-none placeholder-gray-400">
+                    <button type="submit" 
+                            class="px-6 py-3 bg-white text-black font-medium tracking-wider uppercase hover:bg-gray-200 transition duration-300">
+                        Subscribe
+                    </button>
+                </form>
+                
+                <p class="text-xs text-gray-500 mt-4">
+                    By subscribing, you agree to our Privacy Policy and consent to receive updates from our company.
+                </p>
+            </div>
+        </div>
+    </section>
+
+        <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200">
+        <div class="container mx-auto px-6 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                <!-- About -->
+                <div>
+                    <h3 class="font-serif text-lg mb-4">NOUVELLE</h3>
+                    <p class="text-gray-600 text-sm mb-4">
+                        Luxury fashion house dedicated to timeless elegance and sustainable craftsmanship.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-500 hover:text-black transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-500 hover:text-black transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-500 hover:text-black transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-500 hover:text-black transition">
+                            <i class="fab fa-pinterest"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-sm uppercase tracking-wider mb-4">Shop</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 hover:text-black text-sm transition">New Arrivals</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-black text-sm transition">Women's Collection</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-black text-sm transition">Men's Collection</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-black text-sm transition">Accessories</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-black text-sm transition">Sale</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Customer Service -->
+                <div>
+                    <h4 class="text-sm uppercase tracking-wider mb-4">Customer Service</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 hover:text-black text-sm transition">Contact Us</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-black text-sm transition">FAQs</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-black text-sm transition">Shipping & Returns</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-black text-sm transition">Size Guide</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-black text-sm transition">Care Instructions</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Info -->
+                <div>
+                    <h4 class="text-sm uppercase tracking-wider mb-4">Contact</h4>
+                    <ul class="space-y-2 text-gray-600 text-sm">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-xs"></i>
+                            <span>123 Fashion Avenue, Milan, Italy 20121</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3 text-xs"></i>
+                            <span>+39 02 1234 5678</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-xs"></i>
+                            <span>info@nouvelle.com</span>
+                        </li>
+                    </ul>
+                    
+                    <div class="mt-6">
+                        <h4 class="text-sm uppercase tracking-wider mb-4">Payment Methods</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <i class="fab fa-cc-visa text-gray-400 text-xl"></i>
+                            <i class="fab fa-cc-mastercard text-gray-400 text-xl"></i>
+                            <i class="fab fa-cc-amex text-gray-400 text-xl"></i>
+                            <i class="fab fa-cc-paypal text-gray-400 text-xl"></i>
+                            <i class="fab fa-apple-pay text-gray-400 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-200 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">
+                    &copy; 2023 NOUVELLE. All rights reserved.
+                </p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-500 hover:text-black text-sm transition">Privacy Policy</a>
+                    <a href="#" class="text-gray-500 hover:text-black text-sm transition">Terms of Service</a>
+                    <a href="#" class="text-gray-500 hover:text-black text-sm transition">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Quick View Modal -->
+    <div class="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center hidden" id="quick-view-modal">
+        <div class="bg-white max-w-6xl w-full max-h-screen overflow-y-auto rounded-lg">
+            <button class="absolute top-4 right-4 text-2xl text-gray-500 hover:text-black" id="close-quick-view">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8">
+                <div class="sticky top-0">
+                    <div class="relative">
+                        <img src="https://cdn.pixabay.com/photo/2022/10/28/02/20/night-7552210_1280.jpg" 
+                             alt="Product" class="w-full h-auto rounded-lg" id="quick-view-image">
+                        <div class="absolute top-4 right-4">
+                            <button class="bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-4 gap-2 mt-4">
+                        <button class="border rounded p-1 hover:border-gray-400">
+                            <img src="https://cdn.pixabay.com/photo/2022/10/28/02/20/night-7552210_1280.jpg" 
+                                 alt="Thumbnail" class="w-full h-16 object-cover">
+                        </button>
+                        <button class="border rounded p-1 hover:border-gray-400">
+                            <img src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" 
+                                 alt="Thumbnail" class="w-full h-16 object-cover">
+                        </button>
+                        <button class="border rounded p-1 hover:border-gray-400">
+                            <img src="https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1259&q=80" 
+                                 alt="Thumbnail" class="w-full h-16 object-cover">
+                        </button>
+                        <button class="border rounded p-1 hover:border-gray-400">
+                            <img src="https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=735&q=80" 
+                                 alt="Thumbnail" class="w-full h-16 object-cover">
+                        </button>
+                    </div>
+                </div>
+                
+                <div>
+                    <h2 class="font-serif text-3xl mb-2" id="quick-view-title">Luxe Cashmere Sweater</h2>
+                    <p class="text-gray-600 mb-4">Winter Collection</p>
+                    <p class="font-serif text-2xl mb-6" id="quick-view-price">$295</p>
+                    
+                    <div class="mb-6">
+                        <div class="flex items-center mb-2">
+                            <div class="flex mr-2">
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star-half-alt text-yellow-400"></i>
+                            </div>
+                            <span class="text-sm text-gray-600">(24 reviews)</span>
+                        </div>
+                        <a href="#reviews" class="text-sm text-gray-600 hover:text-black underline">Read reviews</a>
+                    </div>
+                    
+                    <p class="text-gray-700 mb-8" id="quick-view-description">
+                        Crafted from the finest Mongolian cashmere, this timeless sweater offers unparalleled softness and warmth. 
+                        The relaxed fit and ribbed detailing make it a versatile piece for both casual and refined occasions.
+                    </p>
+                    
+                    <div class="mb-8">
+                        <h4 class="text-sm uppercase tracking-wider mb-3">Color</h4>
+                        <div class="flex space-x-2">
+                            <button class="w-8 h-8 rounded-full bg-gray-800 border-2 border-white shadow-md"></button>
+                            <button class="w-8 h-8 rounded-full bg-gray-300 border-2 border-white shadow-md"></button>
+                            <button class="w-8 h-8 rounded-full bg-amber-100 border-2 border-white shadow-md"></button>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-8">
+                        <h4 class="text-sm uppercase tracking-wider mb-3">Size</h4>
+                        <div class="size-selector grid grid-cols-5 gap-2">
+                            <input type="radio" name="size" id="size-xs" class="hidden">
+                            <label for="size-xs" class="border rounded text-center py-2 text-sm cursor-pointer hover:border-black">XS</label>
+                            
+                            <input type="radio" name="size" id="size-s" class="hidden" checked>
+                            <label for="size-s" class="border rounded text-center py-2 text-sm cursor-pointer hover:border-black">S</label>
+                            
+                            <input type="radio" name="size" id="size-m" class="hidden">
+                            <label for="size-m" class="border rounded text-center py-2 text-sm cursor-pointer hover:border-black">M</label>
+                            
+                            <input type="radio" name="size" id="size-l" class="hidden">
+                            <label for="size-l" class="border rounded text-center py-2 text-sm cursor-pointer hover:border-black">L</label>
+                            
+                            <input type="radio" name="size" id="size-xl" class="hidden">
+                            <label for="size-xl" class="border rounded text-center py-2 text-sm cursor-pointer hover:border-black">XL</label>
+                        </div>
+                        <a href="#" class="text-xs text-gray-600 hover:text-black underline mt-2 inline-block">Size Guide</a>
+                    </div>
+                    
+                    <div class="mb-8">
+                        <h4 class="text-sm uppercase tracking-wider mb-3">Quantity</h4>
+                        <div class="flex items-center">
+                            <button class="border rounded-l w-10 h-10 flex items-center justify-center hover:bg-gray-100">-</button>
+                            <input type="number" value="1" min="1" class="border-t border-b w-16 h-10 text-center focus:outline-none">
+                            <button class="border rounded-r w-10 h-10 flex items-center justify-center hover:bg-gray-100">+</button>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button class="bg-black text-white px-6 py-3 font-medium tracking-wider uppercase hover:bg-gray-800 transition duration-300 flex-1">
+                            Add to Bag
+                        </button>
+                        <button class="border border-black px-6 py-3 font-medium tracking-wider uppercase hover:bg-gray-100 transition duration-300 flex-1">
+                            Wishlist
+                        </button>
+                    </div>
+                    
+                    <div class="mt-8 pt-6 border-t border-gray-200">
+                        <div class="flex items-start mb-4">
+                            <i class="fas fa-truck mt-1 mr-3 text-gray-500"></i>
+                            <div>
+                                <h4 class="text-sm font-medium mb-1">Free Shipping & Returns</h4>
+                                <p class="text-xs text-gray-600">On all orders over $200. <a href="#" class="underline">Details</a></p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-credit-card mt-1 mr-3 text-gray-500"></i>
+                            <div>
+                                <h4 class="text-sm font-medium mb-1">Secure Payment</h4>
+                                <p class="text-xs text-gray-600">Pay with confidence using our secure checkout.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+        });
+        
+        // Close mobile menu when clicking on a link
+        const mobileMenuLinks = document.querySelectorAll('#mobile-menu a');
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+            });
+        });
+        
+        // Quick View Modal
+        const quickViewButtons = document.querySelectorAll('.quick-view-btn');
+        const quickViewModal = document.getElementById('quick-view-modal');
+        const closeQuickView = document.getElementById('close-quick-view');
+        
+        quickViewButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                quickViewModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        closeQuickView.addEventListener('click', () => {
+            quickViewModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Close modal when clicking outside
+        quickViewModal.addEventListener('click', (e) => {
+            if (e.target === quickViewModal) {
+                quickViewModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Form submission
+        const inquiryForm = document.getElementById('product-inquiry-form');
+        inquiryForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Here you would typically send the form data to your server
+            alert('Thank you for your inquiry! We will get back to you shortly.');
+            inquiryForm.reset();
+        });
+        
+        // Newsletter form
+        const newsletterForm = document.querySelector('section.bg-black form');
+        newsletterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const emailInput = newsletterForm.querySelector('input[type="email"]');
+            alert(`Thank you for subscribing with ${emailInput.value}!`);
+            emailInput.value = '';
+        });
+    </script>
+</body>
+</html>
+   

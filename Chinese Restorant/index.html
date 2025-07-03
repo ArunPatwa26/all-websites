@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dragon Palace | Next-Gen Chinese Dining</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Noto+Sans+SC:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #e63946;
+            --secondary: #f1faee;
+            --accent: #a8dadc;
+            --dark: #1d3557;
+            --light: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            scroll-behavior: smooth;
+            background-color: var(--light);
+            color: #333;
+        }
+        
+        .chinese-font {
+            font-family: 'ZCOOL XiaoWei', serif;
+        }
+        
+        .elegant-font {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .text-stroke {
+            -webkit-text-stroke: 1px var(--primary);
+            color: transparent;
+        }
+        
+        .menu-card:hover .menu-overlay {
+            transform: translateY(0);
+        }
+        
+        .dish-card {
+            perspective: 1000px;
+        }
+        
+        .dish-inner {
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+        
+        .dish-card:hover .dish-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .dish-front, .dish-back {
+            backface-visibility: hidden;
+        }
+        
+        .dish-back {
+            transform: rotateY(180deg);
+        }
+        
+        .scroll-indicator {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-20px);}
+            60% {transform: translateY(-10px);}
+        }
+        
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% {transform: translateY(0px);}
+            50% {transform: translateY(-15px);}
+            100% {transform: translateY(0px);}
+        }
+        
+        .parallax-effect {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        .gradient-mask {
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0));
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+    <!-- 3D Navigation Sphere -->
+    <div class="fixed top-4 right-4 z-50">
+        <div class="relative w-16 h-16 rounded-full bg-black bg-opacity-70 flex items-center justify-center cursor-pointer group">
+            <div class="absolute w-full h-full rounded-full border-2 border-white border-opacity-20 animate-ping opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div class="flex flex-col items-center justify-center space-y-1">
+                <div class="w-6 h-0.5 bg-white"></div>
+                <div class="w-6 h-0.5 bg-white"></div>
+                <div class="w-6 h-0.5 bg-white"></div>
+            </div>
+            
+            <div class="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                <a href="#menu" class="block px-4 py-2 hover:bg-red-50 text-gray-800">Menu</a>
+                <a href="#chef" class="block px-4 py-2 hover:bg-red-50 text-gray-800">Our Chef</a>
+                <a href="#reservation" class="block px-4 py-2 hover:bg-red-50 text-gray-800">Reservations</a>
+                <a href="#contact" class="block px-4 py-2 hover:bg-red-50 text-gray-800">Contact</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Immersive Hero Section -->
+    <section class="relative h-screen overflow-hidden">
+        <div class="absolute inset-0 bg-black opacity-30 z-10"></div>
+        
+        <!-- Dynamic video background -->
+        <video autoplay muted loop class="absolute w-full h-full object-cover">
+            <source src="./11675-231758839.mp4" type="video/mp4">
+        </video>
+        
+        <!-- Floating decorative elements -->
+        <div class="absolute top-1/4 left-1/4 w-16 h-16 rounded-full bg-red-500 opacity-20 filter blur-xl floating" style="animation-delay: 0s;"></div>
+        <div class="absolute top-1/3 right-1/3 w-24 h-24 rounded-full bg-yellow-500 opacity-15 filter blur-xl floating" style="animation-delay: 1s;"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-20 h-20 rounded-full bg-white opacity-10 filter blur-xl floating" style="animation-delay: 2s;"></div>
+        
+        <div class="relative z-20 h-full flex flex-col justify-center items-center text-center px-4">
+            <h1 class="elegant-font text-6xl md:text-8xl lg:text-9xl text-white mb-4 transform transition-all duration-1000 opacity-0 translate-y-10 animate-fade-in">
+                <span class="text-red-500">龍宮</span>
+                <span class="text-white">Dragon Palace</span>
+
+        
+
+            </h1>
+
+            
+            <div class="relative inline-block">
+                <p class="text-xl md:text-2xl text-white mb-8 max-w-2xl opacity-0 translate-y-10 animate-fade-in-delay">
+                    Where 5000 years of tradition meet tomorrow's culinary vision
+                </p>
+                
+                <div class="absolute -bottom-2 left-0 w-full h-1 bg-red-500 transform scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-500"></div>
+            </div>
+            
+            <button class="relative overflow-hidden bg-transparent border-2 border-white text-white px-8 py-3 rounded-full text-lg font-medium group hover:border-red-500 hover:text-red-500 transition-all duration-500 opacity-0 translate-y-10 animate-fade-in-delay-2">
+                <span class="relative z-10">Begin Culinary Journey</span>
+                <span class="absolute inset-0 bg-white transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></span>
+            </button>
+        </div>
+        
+        <!-- Animated scroll indicator -->
+        <div class="absolute bottom-10 left-0 right-0 flex justify-center z-20 scroll-indicator">
+            <svg class="w-8 h-8 text-white animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Signature Dishes - 3D Flip Cards -->
+    <section id="menu" class="py-20 px-4 bg-gradient-to-b from-gray-100 to-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="elegant-font text-4xl md:text-5xl lg:text-6xl mb-4">
+                    <span class="relative inline-block">
+                        <span class="text-stroke">Signature</span>
+                        <span class="absolute inset-0 text-red-500" style="clip-path: polygon(0 0, 100% 0, 100% 60%, 0 60%);">Signature</span>
+                    </span>
+                    <span class="text-gray-800"> Creations</span>
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Each dish tells a story of tradition and innovation</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Dish 1 -->
+                <div class="dish-card h-96">
+                    <div class="dish-inner relative w-full h-full rounded-2xl shadow-2xl overflow-hidden">
+                        <div class="dish-front absolute w-full h-full">
+                            <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d" alt="Dragon Noodles" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                            <div class="absolute bottom-0 left-0 p-6 text-white">
+                                <h3 class="elegant-font text-2xl mb-2">Dragon's Breath Noodles</h3>
+                                <div class="flex items-center">
+                                    <div class="w-8 h-px bg-red-500 mr-2"></div>
+                                    <span>Sichuan Specialty</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dish-back absolute w-full h-full bg-white p-6 flex flex-col justify-center">
+                            <h3 class="elegant-font text-2xl mb-2 text-gray-800">Dragon's Breath Noodles</h3>
+                            <p class="text-gray-600 mb-4">Hand-pulled noodles with our signature mala sauce that slowly builds heat</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-red-500 font-medium">$18</span>
+                                <button class="px-4 py-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors">Add to Order</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Dish 2 -->
+                <div class="dish-card h-96">
+                    <div class="dish-inner relative w-full h-full rounded-2xl shadow-2xl overflow-hidden">
+                        <div class="dish-front absolute w-full h-full">
+                            <img src="https://images.unsplash.com/photo-1585032226651-759b368d7246" alt="Peking Duck" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                            <div class="absolute bottom-0 left-0 p-6 text-white">
+                                <h3 class="elegant-font text-2xl mb-2">Imperial Peking Duck</h3>
+                                <div class="flex items-center">
+                                    <div class="w-8 h-px bg-red-500 mr-2"></div>
+                                    <span>Beijing Classic</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dish-back absolute w-full h-full bg-white p-6 flex flex-col justify-center">
+                            <h3 class="elegant-font text-2xl mb-2 text-gray-800">Imperial Peking Duck</h3>
+                            <p class="text-gray-600 mb-4">48-hour prepared duck with crispy skin, served with handmade pancakes</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-red-500 font-medium">$42</span>
+                                <button class="px-4 py-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors">Add to Order</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Dish 3 -->
+                <div class="dish-card h-96">
+                    <div class="dish-inner relative w-full h-full rounded-2xl shadow-2xl overflow-hidden">
+                        <div class="dish-front absolute w-full h-full">
+                            <img src="https://images.unsplash.com/photo-1551504734-5ee1c4a1479b" alt="Dim Sum" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                            <div class="absolute bottom-0 left-0 p-6 text-white">
+                                <h3 class="elegant-font text-2xl mb-2">Celestial Dim Sum</h3>
+                                <div class="flex items-center">
+                                    <div class="w-8 h-px bg-red-500 mr-2"></div>
+                                    <span>Cantonese Delight</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dish-back absolute w-full h-full bg-white p-6 flex flex-col justify-center">
+                            <h3 class="elegant-font text-2xl mb-2 text-gray-800">Celestial Dim Sum</h3>
+                            <p class="text-gray-600 mb-4">Selection of 8 delicate handmade dumplings and buns</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-red-500 font-medium">$24</span>
+                                <button class="px-4 py-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors">Add to Order</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <button class="relative overflow-hidden bg-red-500 text-white px-8 py-3 rounded-full text-lg font-medium group hover:bg-red-600 transition-all duration-500">
+                    <span class="relative z-10">View Full Menu</span>
+                    <span class="absolute inset-0 bg-black bg-opacity-20 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Tea Experience -->
+    <section class="parallax-effect h-screen flex items-center relative" style="background-image: url('https://images.unsplash.com/photo-1533929736458-ca588d08c8be')">
+        <div class="absolute inset-0 bg-black opacity-40"></div>
+        
+        <div class="relative z-10 container mx-auto px-4">
+            <div class="max-w-md bg-white bg-opacity-90 backdrop-blur-sm rounded-xl shadow-2xl overflow-hidden">
+                <div class="p-8 md:p-10">
+                    <h2 class="elegant-font text-3xl md:text-4xl text-gray-800 mb-4">
+                        <span class="text-red-500">茶道</span> Tea Ceremony
+                    </h2>
+                    <p class="text-gray-700 mb-6">Experience our authentic Gongfu tea service with rare teas sourced directly from China's finest gardens.</p>
+                    
+                    <div class="grid grid-cols-3 gap-4 mb-6">
+                        <div class="bg-gray-100 p-3 rounded-lg text-center cursor-pointer hover:bg-red-100 transition-colors">
+                            <div class="w-12 h-12 mx-auto mb-2 bg-red-500 rounded-full flex items-center justify-center text-white">
+                                <i class="fas fa-leaf"></i>
+                            </div>
+                            <span class="text-sm font-medium">Oolong</span>
+                        </div>
+                        <div class="bg-gray-100 p-3 rounded-lg text-center cursor-pointer hover:bg-red-100 transition-colors">
+                            <div class="w-12 h-12 mx-auto mb-2 bg-red-500 rounded-full flex items-center justify-center text-white">
+                                <i class="fas fa-mountain"></i>
+                            </div>
+                            <span class="text-sm font-medium">Pu'erh</span>
+                        </div>
+                        <div class="bg-gray-100 p-3 rounded-lg text-center cursor-pointer hover:bg-red-100 transition-colors">
+                            <div class="w-12 h-12 mx-auto mb-2 bg-red-500 rounded-full flex items-center justify-center text-white">
+                                <i class="fas fa-cloud"></i>
+                            </div>
+                            <span class="text-sm font-medium">White</span>
+                        </div>
+                    </div>
+                    
+                    <button class="w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-lg font-medium transition-colors duration-300 flex items-center justify-center">
+                        <i class="fas fa-calendar-alt mr-2"></i> Reserve Tea Session
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Floating tea leaves -->
+        <div class="absolute top-1/4 left-1/4 w-8 h-8 opacity-70 floating" style="animation-delay: 0.5s;">
+            <img src="https://cdn-icons-png.flaticon.com/512/3480/3480799.png" alt="Tea leaf" class="w-full h-full">
+        </div>
+        <div class="absolute top-1/3 right-1/3 w-6 h-6 opacity-60 floating" style="animation-delay: 1s;">
+            <img src="https://cdn-icons-png.flaticon.com/512/3480/3480799.png" alt="Tea leaf" class="w-full h-full">
+        </div>
+        <div class="absolute bottom-1/4 right-1/4 w-10 h-10 opacity-50 floating" style="animation-delay: 1.5s;">
+            <img src="https://cdn-icons-png.flaticon.com/512/3480/3480799.png" alt="Tea leaf" class="w-full h-full">
+        </div>
+    </section>
+
+    <!-- Chef's Story - Interactive Timeline -->
+    <section id="chef" class="py-20 px-4 bg-gray-900 text-white">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="elegant-font text-4xl md:text-5xl mb-4">
+                    <span class="text-red-500">Master</span> Chef Li
+                </h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">5th generation culinary artist preserving traditions while innovating</p>
+            </div>
+            
+            <div class="relative">
+                <!-- Timeline line -->
+                <div class="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gray-700"></div>
+                
+                <!-- Timeline items -->
+                <div class="mb-12 w-full">
+                    <div class="flex flex-col md:flex-row items-center">
+                        <div class="md:w-1/2 md:pr-12 mb-6 md:mb-0 md:text-right">
+                            <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                                <h3 class="elegant-font text-2xl text-red-400 mb-2">Beijing Culinary Institute</h3>
+                                <p class="text-gray-400">1985-1989</p>
+                                <p class="text-gray-300 mt-2">Trained under legendary Chef Wong in traditional imperial cuisine techniques</p>
+                            </div>
+                        </div>
+                        <div class="hidden md:block md:w-1/2"></div>
+                    </div>
+                </div>
+                
+                <div class="mb-12 w-full">
+                    <div class="flex flex-col md:flex-row items-center">
+                        <div class="hidden md:block md:w-1/2"></div>
+                        <div class="md:w-1/2 md:pl-12">
+                            <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                                <h3 class="elegant-font text-2xl text-red-400 mb-2">Sichuan Province</h3>
+                                <p class="text-gray-400">1990-1995</p>
+                                <p class="text-gray-300 mt-2">Mastered the art of Sichuan cuisine and the delicate balance of mala flavors</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-12 w-full">
+                    <div class="flex flex-col md:flex-row items-center">
+                        <div class="md:w-1/2 md:pr-12 mb-6 md:mb-0 md:text-right">
+                            <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                                <h3 class="elegant-font text-2xl text-red-400 mb-2">Michelin Star in Shanghai</h3>
+                                <p class="text-gray-400">2002</p>
+                                <p class="text-gray-300 mt-2">Awarded first Michelin star for innovative fusion of traditional and modern techniques</p>
+                            </div>
+                        </div>
+                        <div class="hidden md:block md:w-1/2"></div>
+                    </div>
+                </div>
+                
+                <div class="w-full">
+                    <div class="flex flex-col md:flex-row items-center">
+                        <div class="hidden md:block md:w-1/2"></div>
+                        <div class="md:w-1/2 md:pl-12">
+                            <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                                <h3 class="elegant-font text-2xl text-red-400 mb-2">Dragon Palace</h3>
+                                <p class="text-gray-400">2015-Present</p>
+                                <p class="text-gray-300 mt-2">Bringing authentic Chinese culinary artistry to a global audience</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating Reservation Card with Animated Form -->
+    <section id="reservation" class="py-20 px-4 relative overflow-hidden">
+        <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden transform transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
+            <div class="md:flex">
+                <div class="md:w-1/2 bg-red-500 p-8 md:p-12 text-white relative overflow-hidden">
+                    <div class="absolute -right-20 -top-20 w-64 h-64 rounded-full bg-red-600 opacity-20"></div>
+                    <div class="absolute -right-10 -bottom-10 w-48 h-48 rounded-full bg-red-400 opacity-15"></div>
+                    <div class="relative z-10">
+                        <h2 class="elegant-font text-3xl md:text-4xl mb-4">Reserve Your Journey</h2>
+                        <p class="mb-6">Experience culinary artistry at our chef's counter or in our elegant dining room</p>
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 rounded-full bg-white bg-opacity-20 flex items-center justify-center mr-4">
+                                <i class="fas fa-phone-alt text-white"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Reservations</p>
+                                <p>+1 (555) 123-4567</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2 p-8 md:p-12">
+                    <form class="space-y-4">
+                        <div>
+                            <label class="block text-gray-700 mb-2 font-medium">Date</label>
+                            <input type="date" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2 font-medium">Time</label>
+                            <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all">
+                                <option>6:00 PM</option>
+                                <option>6:30 PM</option>
+                                <option>7:00 PM</option>
+                                <option>7:30 PM</option>
+                                <option>8:00 PM</option>
+                                <option>8:30 PM</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2 font-medium">Party Size</label>
+                            <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all">
+                                <option>1 person</option>
+                                <option>2 people</option>
+                                <option>3 people</option>
+                                <option>4 people</option>
+                                <option>5+ people</option>
+                            </select>
+                        </div>
+                        <button class="w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-lg font-medium transition-colors duration-300 flex items-center justify-center">
+                            <i class="fas fa-calendar-check mr-2"></i> Confirm Reservation
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Floating decorative elements -->
+        <div class="absolute top-20 left-10 w-16 h-16 rounded-full bg-red-500 opacity-10 filter blur-xl floating" style="animation-delay: 0s;"></div>
+        <div class="absolute bottom-20 right-10 w-24 h-24 rounded-full bg-yellow-500 opacity-10 filter blur-xl floating" style="animation-delay: 1s;"></div>
+    </section>
+
+    <!-- Interactive Map and Contact -->
+    <section id="contact" class="bg-gray-100 pt-20 pb-10 px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden h-96">
+                    <!-- Interactive Map -->
+                    <iframe class="w-full h-full" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215256836287!2d-73.9992646845938!3d40.71573897932948!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a1e1c0a0c9b%3A0x8b1c4b3b3b3b3b3b!2sChinatown%2C%20New%20York%2C%20NY%2010013!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+                <div>
+                    <h3 class="elegant-font text-3xl mb-6 text-gray-800">Visit Us</h3>
+                    <address class="not-italic text-gray-700 mb-6">
+                        <div class="flex items-start mb-4">
+                            <div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center mr-4 mt-1">
+                                <i class="fas fa-map-marker-alt text-red-500"></i>
+                            </div>
+                            <p>88 Wandering Dragon Avenue<br>Chinatown, NY 10013</p>
+                        </div>
+                        <div class="flex items-center mb-4">
+                            <div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center mr-4">
+                                <i class="fas fa-phone-alt text-red-500"></i>
+                            </div>
+                            <p>+1 (555) 123-4567</p>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center mr-4">
+                                <i class="fas fa-envelope text-red-500"></i>
+                            </div>
+                            <p>reservations@dragonpalace.com</p>
+                        </div>
+                    </address>
+                    
+                    <h4 class="elegant-font text-xl mt-8 mb-4 text-gray-800">Hours</h4>
+                    <ul class="space-y-2 text-gray-700">
+                        <li class="flex justify-between">
+                            <span>Monday - Thursday</span>
+                            <span>11AM - 10PM</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Friday - Saturday</span>
+                            <span>11AM - 11PM</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Sunday</span>
+                            <span>12PM - 9PM</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-300 pt-8 text-center text-gray-600">
+                <p>© 2023 Dragon Palace. All rights reserved.</p>
+                <div class="flex justify-center space-x-6 mt-4">
+                    <a href="#" class="text-gray-600 hover:text-red-500 transition-colors">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-red-500 transition-colors">
+                        <i class="fab fa-facebook text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-red-500 transition-colors">
+                        <i class="fab fa-tiktok text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating Chat Button -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <button class="w-16 h-16 rounded-full bg-red-500 text-white flex items-center justify-center shadow-lg hover:bg-red-600 transition-all transform hover:scale-110 group">
+            <i class="fas fa-comment-dots text-xl"></i>
+            <span class="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-yellow-400 text-xs flex items-center justify-center text-gray-900 font-bold animate-pulse">1</span>
+        </button>
+    </div>
+
+    <script>
+        // Animate elements on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.animate-fade-in, .animate-fade-in-delay, .animate-fade-in-delay-2');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (elementPosition < windowHeight - 100) {
+                        element.classList.add('opacity-100', 'translate-y-0');
+                    }
+                });
+            };
+            
+            // Initial check
+            animateOnScroll();
+            
+            // Check on scroll
+            window.addEventListener('scroll', animateOnScroll);
+            
+            // 3D dish card hover effect
+            const dishCards = document.querySelectorAll('.dish-card');
+            dishCards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const xAxis = (window.innerWidth / 2 - e.pageX) / 15;
+                    const yAxis = (window.innerHeight / 2 - e.pageY) / 15;
+                    card.querySelector('.dish-inner').style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+                });
+                
+                card.addEventListener('mouseenter', () => {
+                    card.querySelector('.dish-inner').style.transition = 'none';
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.querySelector('.dish-inner').style.transform = 'rotateY(0deg) rotateX(0deg)';
+                    card.querySelector('.dish-inner').style.transition = 'transform 0.5s ease';
+                });
+            });
+            
+            // Video play button
+            const playButtons = document.querySelectorAll('.play-button');
+            playButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const videoContainer = this.closest('.video-container');
+                    videoContainer.innerHTML = `
+                        <iframe class="w-full h-full" src="https://media.istockphoto.com/id/2157393228/video/video-footage-of-a-chef-making-pad-thai-on-a-hot-pan-in-a-home-kitchen-to-prepare-a-lunch-box.mp4?s=mp4-640x640-is&k=20&c=MgPKZ2y0RUwri3HBH8x9TAngfwV1IgONJqrZW6i73ps=" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    `;
+                });
+            });
+        });
+
+      
+    </script>
+</body>
+</html>

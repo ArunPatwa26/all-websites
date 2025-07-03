@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wavrik - Coding Education for Schools</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            background-color: #f8fafc;
+        }
+        
+        .title-font {
+            font-family: 'Quicksand', sans-serif;
+        }
+        
+        .nav-menu {
+            clip-path: circle(0% at 90% 5%);
+            transition: clip-path 0.8s ease-out;
+        }
+        
+        .nav-menu.open {
+            clip-path: circle(150% at 90% 5%);
+        }
+        
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(99, 102, 241, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+        }
+        
+        .gradient-text {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .service-card {
+            transition: all 0.3s ease;
+        }
+        
+        .hero-bg {
+            background: radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.1) 0%, rgba(248, 250, 252, 1) 50%);
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 sm:px-4 lg:px-6">
+            <div class="flex justify-between h-20 items-center">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <div class="w-12 h-12 rounded-full bg-indigo-500 flex items-center justify-center text-white font-bold text-xl">
+                        <img src="logo.jpg" alt="logo" class="w-8 h-8 rounded-full">
+                    </div>
+                    <span class="ml-3 text-xl font-bold text-gray-900 title-font">Wavrik</span>
+                </div>
+                
+                <!-- Desktop Navigation (hidden on mobile) -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-gray-900 hover:text-indigo-600 px-3 py-2 font-medium">Home</a>
+                    <a href="#about" class="text-gray-900 hover:text-indigo-600 px-3 py-2 font-medium">About</a>
+                    <a href="#services" class="text-gray-900 hover:text-indigo-600 px-3 py-2 font-medium">Services</a>
+                    <a href="#gallery" class="text-gray-900 hover:text-indigo-600 px-3 py-2 font-medium">Gallery</a>
+                    <a href="#contact" class="text-gray-900 hover:text-indigo-600 px-3 py-2 font-medium">Contact</a>
+                    <a href="#" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-full font-medium transition duration-300">Get Started</a>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="menu-toggle" class="rounded-full bg-indigo-600 text-white p-3 focus:outline-none pulse">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu (Circular Design) -->
+        <div id="mobile-menu" class="nav-menu absolute top-0 right-0 w-full h-screen bg-indigo-600 text-white z-40">
+            <div class="flex justify-end p-6">
+                <button id="menu-close" class="rounded-full bg-white text-indigo-600 p-2 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="flex flex-col items-center justify-center h-3/4 px-4">
+                <a href="#home" class="text-2xl font-medium py-4 hover:text-indigo-200 transition duration-300">Home</a>
+                <a href="#about" class="text-2xl font-medium py-4 hover:text-indigo-200 transition duration-300">About</a>
+                <a href="#services" class="text-2xl font-medium py-4 hover:text-indigo-200 transition duration-300">Services</a>
+                <a href="#gallery" class="text-2xl font-medium py-4 hover:text-indigo-200 transition duration-300">Gallery</a>
+                <a href="#contact" class="text-2xl font-medium py-4 hover:text-indigo-200 transition duration-300">Contact</a>
+                <a href="#" class="mt-8 bg-white text-indigo-600 px-8 py-3 rounded-full font-medium text-lg transition duration-300 hover:bg-indigo-100">Get Started</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+<section id="home" class="pt-24 pb-16 md:pt-32 md:pb-24 hero-bg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="md:flex items-center">
+            <!-- Text Column -->
+            <div class="md:w-1/2 mb-12 md:mb-0">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight title-font mb-6">
+                    Shaping the Future of <span class="gradient-text">Coding Education</span>
+                </h1>
+                <p class="text-lg text-gray-600 mb-8 max-w-lg">
+                    At <strong>Wavrik</strong>, we're building a fresh approach to teaching coding in schools. We're just starting out — but our goal is big: to make coding fun, creative, and accessible for every child.
+                </p>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="#" class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-full font-medium transition duration-300 text-center">
+                        Join the Journey
+                    </a>
+                    <a href="#" class="border-2 border-gray-300 hover:border-indigo-500 text-gray-700 hover:text-indigo-600 px-8 py-3 rounded-full font-medium transition duration-300 text-center">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- Image Column -->
+            <div class="md:w-1/2 flex justify-center">
+                <div class="relative w-full max-w-md">
+                    <div class="absolute -top-10 -left-10 w-30 h-32 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+                    <div class="absolute -bottom-10 -right-10 w-30 h-32 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+                    <div class="absolute top-0 left-20 w-32 h-30 bg-indigo-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+                    <img src="https://images.unsplash.com/photo-1551033406-611cf9a28f67?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Students learning coding" class="relative rounded-2xl shadow-2xl w-full object-cover floating" style="height: 500px;">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    
+   <!-- About Section -->
+<section id="about" class="py-16 md:py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 title-font mb-4">About <span class="gradient-text">Wavrik</span></h2>
+            <div class="w-20 h-1 bg-indigo-600 mx-auto mb-6"></div>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                Wavrik is a passionate startup on a mission to transform how coding is introduced in schools. We're just getting started—but our vision is bold, and our commitment is strong.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="relative">
+                <div class="absolute -top-6 -left-6 w-full h-full border-4 border-indigo-200 rounded-2xl z-0"></div>
+                <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="About Wavrik" class="relative z-10 rounded-2xl shadow-lg w-full object-cover" style="height: 500px;">
+            </div>
+            <div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">Our Vision</h3>
+                <p class="text-gray-600 mb-6">
+                    At Wavrik, we dream of a future where coding is a core part of every student's learning journey. We're building an educational platform that makes programming accessible, creative, and fun—starting from the ground up.
+                </p>
+
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">Our Journey Begins</h3>
+                <p class="text-gray-600 mb-6">
+                    We may not have students or school partnerships yet, but every big vision starts with a small first step. We're currently designing our curriculum, crafting engaging learning experiences, and reaching out to early partners who share our belief in the power of coding education.
+                </p>
+
+                <div class="grid grid-cols-2 gap-4 mt-8">
+                    <div class="bg-indigo-50 p-4 rounded-lg">
+                        <div class="text-indigo-600 text-2xl mb-2">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-900">Driven by Passion</h4>
+                        <p class="text-sm text-gray-600">A young team with big ideas</p>
+                    </div>
+                    <div class="bg-purple-50 p-4 rounded-lg">
+                        <div class="text-purple-600 text-2xl mb-2">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-900">Early-Stage Startup</h4>
+                        <p class="text-sm text-gray-600">Just beginning our journey</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    
+    <!-- Services Section -->
+    <section id="services" class="py-16 md:py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 title-font mb-4">Our <span class="gradient-text">Services</span></h2>
+                <div class="w-20 h-1 bg-indigo-600 mx-auto mb-6"></div>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    We offer comprehensive coding education programs tailored for different age groups and skill levels.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden service-card p-6">
+                    <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center text-indigo-600 mb-6">
+                        <i class="fas fa-laptop-code text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Junior Coders (1st-5th)</h3>
+                    <p class="text-gray-600 mb-4">
+                        Introduction to computational thinking through fun, game-based learning with Scratch and block-based programming.
+                    </p>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-indigo-500 mr-2"></i>
+                            Creative storytelling with code
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-indigo-500 mr-2"></i>
+                            Simple game development
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-indigo-500 mr-2"></i>
+                            Basic animation projects
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden service-card p-6">
+                    <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center text-purple-600 mb-6">
+                        <i class="fas fa-code text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Middle School (6th-8th)</h3>
+                    <p class="text-gray-600 mb-4">
+                        Transition to text-based coding with Python and web development fundamentals (HTML/CSS/JavaScript).
+                    </p>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-purple-500 mr-2"></i>
+                            Building simple websites
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-purple-500 mr-2"></i>
+                            Interactive apps with Python
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-purple-500 mr-2"></i>
+                            Introduction to robotics
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Service 3 -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden service-card p-6">
+                    <div class="bg-pink-100 w-16 h-16 rounded-full flex items-center justify-center text-pink-600 mb-6">
+                        <i class="fas fa-rocket text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">High School (9th-12th)</h3>
+                    <p class="text-gray-600 mb-4">
+                        Advanced programming concepts, data structures, algorithms, and specialized tracks like AI/ML or game development.
+                    </p>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-pink-500 mr-2"></i>
+                            Full-stack web development
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-pink-500 mr-2"></i>
+                            Mobile app development
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-pink-500 mr-2"></i>
+                            Competitive programming
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Service 4 -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden service-card p-6">
+                    <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center text-blue-600 mb-6">
+                        <i class="fas fa-paint-brush text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">UI/UX Design</h3>
+                    <p class="text-gray-600 mb-4">
+                        Teaching students the principles of design thinking and creating user-friendly interfaces.
+                    </p>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-blue-500 mr-2"></i>
+                            Wireframing and prototyping
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-blue-500 mr-2"></i>
+                            Color theory and typography
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-blue-500 mr-2"></i>
+                            User research basics
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Service 5 -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden service-card p-6">
+                    <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center text-green-600 mb-6">
+                        <i class="fas fa-robot text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Creative Tech</h3>
+                    <p class="text-gray-600 mb-4">
+                        Combining coding with art, music, and physical computing for innovative projects.
+                    </p>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            Arduino/Raspberry Pi projects
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            Digital art with code
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            Interactive installations
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Service 6 -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden service-card p-6">
+                    <div class="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center text-yellow-600 mb-6">
+                        <i class="fas fa-chalkboard-teacher text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Teacher Training</h3>
+                    <p class="text-gray-600 mb-4">
+                        Professional development for educators to implement coding in their classrooms.
+                    </p>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-yellow-500 mr-2"></i>
+                            Curriculum integration
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-yellow-500 mr-2"></i>
+                            Classroom resources
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-yellow-500 mr-2"></i>
+                            Ongoing support
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-16 md:py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 title-font mb-4">Our <span class="gradient-text">Learning</span> Approach</h2>
+                <div class="w-20 h-1 bg-indigo-600 mx-auto mb-6"></div>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    See how we make coding fun and engaging for students of all ages.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div class="rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300">
+                    <img src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80" alt="Students learning" class="w-full h-48 object-cover hover:scale-105 transition duration-500">
+                </div>
+                <div class="rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300">
+                    <img src="https://images.unsplash.com/photo-1605711285791-0219e80e43a3?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dGVhY2hpbmclMjBjb2Rpbmd8ZW58MHx8MHx8fDA%3D" alt="Coding class" class="w-100 h-48 object-cover hover:scale-105 transition duration-500">
+                </div>
+                <div class="rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300">
+                    <img src="https://images.unsplash.com/file-1719664968387-83d5a3f4d758image?w=416&dpr=2&auto=format&fit=crop&q=60" alt="Robotics project" class="w-full h-48 object-cover hover:scale-105 transition duration-500">
+                </div>
+                <div class="rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300">
+                    <img src="https://images.unsplash.com/photo-1707948952408-f7aa2c51db1f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHRlYWNoaW5nJTIwY29kaW5nJTIwcm9ib3RpY3xlbnwwfHwwfHx8MA%3D%3D">
+                </div>
+                <div class="rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300">
+                    <img src="https://images.unsplash.com/photo-1745571479662-54a2ad1c747f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHRlYWNoaW5nJTIwY29kaW5nJTIwcm9ib3RpY3xlbnwwfHwwfHx8MA%3D%3D">
+                </div>
+                <div class="rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300">
+                    <img src="https://images.unsplash.com/photo-1710098455568-441061ab4dfa?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHRlYWNoaW5nJTIwY29kaW5nJTIwcm9ib3RpY3xlbnwwfHwwfHx8MA%3D%3D" alt="Student presentation" class="w-full h-48 object-cover hover:scale-105 transition duration-500">
+                </div>
+                <div class="rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300">
+                    <img src="https://media.istockphoto.com/id/2179421920/photo/black-and-white-male-software-developer-programmers-work-together-on-robot-hand-machine.webp?a=1&b=1&s=612x612&w=0&k=20&c=4NZn90sWe4bc3EGi9zXCcsCOiRZdWiMWpC3qhuN5tho=" alt="Coding workshop" class="w-full h-48 object-cover hover:scale-105 transition duration-500">
+                </div>
+                <div class="rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300">
+                    <img src="https://media.istockphoto.com/id/1150730742/photo/overhead-view-of-students-in-after-school-computer-coding-class-learning-to-program-robot.webp?a=1&b=1&s=612x612&w=0&k=20&c=CkpIckzA1UkEXVA75UuCQLdWdnh0VV4_TegOCgxh4Q0=" alt="Happy students" class="w-full h-48 object-cover hover:scale-105 transition duration-500">
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300">
+                    View More Photos
+                    <svg class="ml-3 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Our Goal Section -->
+<section class="py-16 md:py-24 bg-indigo-600 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold title-font mb-4">Our <span class="text-indigo-200">Goal</span></h2>
+            <div class="w-20 h-1 bg-white mx-auto mb-6"></div>
+            <p class="text-lg text-indigo-100 max-w-3xl mx-auto">
+                At Wavrik, our goal is simple yet bold — to make coding a natural part of every child’s education, no matter their background or prior experience.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8 text-center">
+            <div class="bg-white/10 backdrop-blur-sm p-8 rounded-2xl">
+                <div class="text-4xl mb-4 text-yellow-300">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <h4 class="font-bold text-xl mb-2">Inspire Creativity</h4>
+                <p class="text-indigo-100">
+                    We want to spark imagination and curiosity in young minds by teaching them how to bring their ideas to life through code.
+                </p>
+            </div>
+
+            <div class="bg-white/10 backdrop-blur-sm p-8 rounded-2xl">
+                <div class="text-4xl mb-4 text-green-300">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <h4 class="font-bold text-xl mb-2">Reach Every School</h4>
+                <p class="text-indigo-100">
+                    Whether urban or rural, big or small — we aim to partner with schools across the country to ensure no student is left behind.
+                </p>
+            </div>
+
+            <div class="bg-white/10 backdrop-blur-sm p-8 rounded-2xl">
+                <div class="text-4xl mb-4 text-pink-300">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <h4 class="font-bold text-xl mb-2">Build Future Skills</h4>
+                <p class="text-indigo-100">
+                    Our curriculum is designed to equip students with real-world tech skills that prepare them for tomorrow’s careers — starting today.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+    
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 md:py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 title-font mb-4">Get <span class="gradient-text">In Touch</span></h2>
+                <div class="w-20 h-1 bg-indigo-600 mx-auto mb-6"></div>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    Ready to bring Wavrik's coding programs to your school? Contact us today!
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">Contact Information</h3>
+                    <p class="text-gray-600 mb-8">
+                        Have questions about our programs or want to schedule a demo? Reach out to our team - we'd love to hear from you!
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="bg-indigo-100 w-12 h-12 rounded-full flex items-center justify-center text-indigo-600 mr-4">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900">Our Location</h4>
+                                <p class="text-gray-600">123 Education Street, Tech City, TC 12345</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-purple-100 w-12 h-12 rounded-full flex items-center justify-center text-purple-600 mr-4">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900">Email Us</h4>
+                                <p class="text-gray-600">hello@wavrik.com</p>
+                                <p class="text-gray-600">schools@wavrik.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-pink-100 w-12 h-12 rounded-full flex items-center justify-center text-pink-600 mr-4">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900">Call Us</h4>
+                                <p class="text-gray-600">+1 (555) 123-4567</p>
+                                <p class="text-gray-600">Mon-Fri, 9am-5pm</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <h4 class="font-bold text-gray-900 mb-4">Follow Us</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center hover:bg-indigo-600 hover:text-white transition duration-300">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center hover:bg-indigo-600 hover:text-white transition duration-300">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center hover:bg-indigo-600 hover:text-white transition duration-300">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center hover:bg-indigo-600 hover:text-white transition duration-300">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center hover:bg-indigo-600 hover:text-white transition duration-300">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <form class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="first-name" class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                                <input type="text" id="first-name" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition duration-300" placeholder="Your first name">
+                            </div>
+                            <div>
+                                <label for="last-name" class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                                <input type="text" id="last-name" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition duration-300" placeholder="Your last name">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                            <input type="email" id="email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition duration-300" placeholder="Your email address">
+                        </div>
+                        
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                            <input type="tel" id="phone" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition duration-300" placeholder="Your phone number">
+                        </div>
+                        
+                        <div>
+                            <label for="school" class="block text-sm font-medium text-gray-700 mb-1">School/Organization</label>
+                            <input type="text" id="school" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition duration-300" placeholder="Your school or organization">
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Your Message</label>
+                            <textarea id="message" rows="4" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition duration-300" placeholder="How can we help you?"></textarea>
+                        </div>
+                        
+                        <div>
+                            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-full font-medium transition duration-300">
+                                Send Message
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12">
+                <div class="col-span-2">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 rounded-full bg-indigo-500 flex items-center justify-center text-white font-bold text-xl">
+                            <img src="logo.jpg" alt="logo" class="w-8 h-8 rounded-full">
+                        </div>
+                        <span class="ml-3 text-xl font-bold title-font">Wavrik</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">
+                        Making coding education accessible, engaging, and fun for students from 1st to 12th grade through innovative teaching methods.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-6">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#home" class="text-gray-400 hover:text-white transition duration-300">Home</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition duration-300">About Us</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition duration-300">Services</a></li>
+                        <li><a href="#gallery" class="text-gray-400 hover:text-white transition duration-300">Gallery</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-white transition duration-300">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-6">Programs</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Junior Coders</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Middle School</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">High School</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">UI/UX Design</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Creative Tech</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-6">Contact</h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-indigo-400"></i>
+                            <span>123 Education Street, Tech City, TC 12345</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope mt-1 mr-3 text-indigo-400"></i>
+                            <span>hello@wavrik.com</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone-alt mt-1 mr-3 text-indigo-400"></i>
+                            <span>+1 (555) 123-4567</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">
+                    &copy; 2023 Wavrik. All rights reserved.
+                </p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white text-sm transition duration-300">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm transition duration-300">Terms of Service</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm transition duration-300">Cookies Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuClose = document.getElementById('menu-close');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        menuClose.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+            document.body.style.overflow = '';
+        });
+        
+        // Close menu when clicking on a link
+        const menuLinks = document.querySelectorAll('#mobile-menu a');
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+                document.body.style.overflow = '';
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Animation on scroll
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.service-card, .floating');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                
+                if (elementPosition < screenPosition) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        }
+        
+        // Set initial state for animated elements
+        document.querySelectorAll('.service-card, .floating').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        });
+        
+        // Run on load and scroll
+        window.addEventListener('load', animateOnScroll);
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
+</body>
+</html>

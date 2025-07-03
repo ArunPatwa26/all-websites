@@ -1,0 +1,232 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 1s ease forwards;
+}
+
+.animate-fadeIn.delay-300 {
+  animation-delay: 0.3s;
+}
+
+.animate-fadeIn.delay-500 {
+  animation-delay: 0.5s;
+}
+
+.animate-fadeIn.delay-700 {
+  animation-delay: 0.7s;
+}
+
+.animate-bounce {
+  animation: bounce 2s infinite;
+}
+
+.nav-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.nav-dot:hover, .nav-dot.active {
+  background-color: white;
+  transform: scale(1.5);
+}
+
+.performance-card {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 0.5s ease;
+}
+
+.performance-card.in-view {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.tech-card {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.5s ease;
+  padding: 2rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.tech-card.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tech-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.tech-card .icon-container {
+  transition: all 0.3s ease;
+}
+
+.tech-card:hover .icon-container {
+  transform: scale(1.1);
+}
+
+.color-option {
+  width: 100%;
+  padding-bottom: 100%;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.color-option::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.color-option:hover::after, .color-option.active::after {
+  border-color: white;
+}
+
+.color-option.active {
+  transform: scale(1.1);
+}
+
+/* Base Styles */
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;700;900&display=swap');
+
+body {
+  font-family: 'Kanit', sans-serif;
+}
+
+/* Holographic Elements */
+.holographic-section {
+  position: relative;
+}
+
+.holographic-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(100, 255, 255, 0.5), transparent);
+}
+
+.holographic-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  transition: all 0.5s ease;
+}
+
+.holographic-card:hover {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 30px rgba(100, 255, 255, 0.2);
+}
+
+/* Text Gradient */
+.text-gradient {
+  background: linear-gradient(45deg, #00ffff, #ff00ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Tech Cards */
+.tech-card {
+  padding: 2rem;
+  border-radius: 1rem;
+  transition: all 0.5s ease;
+  text-align: center;
+}
+
+.tech-card .icon {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: #00ffff;
+}
+
+.tech-card h3 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.tech-card:hover {
+  transform: translateY(-10px);
+  background: rgba(0, 255, 255, 0.05);
+}
+
+/* Configurator */
+.color-option {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.color-option::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.color-option:hover::after, .color-option.active::after {
+  border-color: white;
+}
+
+.config-option {
+  padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.config-option:hover, .config-option.active {
+  background: rgba(0, 255, 255, 0.1);
+  border-color: #00ffff;
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+.floating {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Custom Cursor */
+.cursor-none {
+  cursor: none;
+}

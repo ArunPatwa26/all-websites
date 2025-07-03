@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EliteCuts | Premium Hair Salon</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Hero section animation */
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 100%),
+                url('https://images.unsplash.com/photo-1605497788044-5a32c7078486?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            animation: zoomInOut 20s infinite alternate;
+        }
+
+        @keyframes zoomInOut {
+            0% {
+                background-size: 100%;
+            }
+
+            100% {
+                background-size: 110%;
+            }
+        }
+
+        /* Scissor animation */
+        .scissor-animate {
+            animation: scissorCut 2s infinite ease-in-out;
+            transform-origin: top center;
+        }
+
+        @keyframes scissorCut {
+
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+
+            50% {
+                transform: rotate(10deg);
+            }
+        }
+
+        /* Haircut process animation */
+        .process-step {
+            transition: all 0.5s ease;
+        }
+
+        .process-step:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease forwards;
+        }
+
+        /* Floating elements */
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* Hair strand animation */
+        .hair-strand {
+            position: absolute;
+            background: #d1a783;
+            opacity: 0.6;
+            animation: falling linear infinite;
+        }
+
+        @keyframes falling {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        /* Booking form animation */
+        .booking-form {
+            transform: perspective(1000px) rotateY(-5deg);
+            transition: all 0.5s ease;
+        }
+
+        .booking-form:hover {
+            transform: perspective(1000px) rotateY(0deg);
+        }
+
+        /* Barber pole animation */
+        .barber-pole {
+            background: repeating-linear-gradient(45deg,
+                    #e53e3e,
+                    #e53e3e 10px,
+                    #ffffff 10px,
+                    #ffffff 20px,
+                    #1a365d 20px,
+                    #1a365d 30px);
+            animation: barberPole 2s linear infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes barberPole {
+            0% {
+                background-position: 0% 0%;
+            }
+
+            100% {
+                background-position: 100% 100%;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Floating hair strands (background animation) -->
+    <div id="hair-strands"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white/90 backdrop-blur-md shadow-sm z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 sm:px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 rounded-full barber-pole mr-3"></div>
+                    <a href="#" class="text-2xl font-bold text-gray-800">Elite<span class="text-red-500">Cuts</span></a>
+                </div>
+
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="text-gray-700 hover:text-red-500 transition">Home</a>
+                    <a href="#services" class="text-gray-700 hover:text-red-500 transition">Services</a>
+                    <a href="#barbers" class="text-gray-700 hover:text-red-500 transition">Our Barbers</a>
+                    <a href="#gallery" class="text-gray-700 hover:text-red-500 transition">Gallery</a>
+                    <a href="#booking" class="text-gray-700 hover:text-red-500 transition">Book Now</a>
+                </div>
+
+                <div class="hidden md:block">
+                    <a href="#booking"
+                        class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-full transition shadow-lg hover:shadow-xl">Book
+                        Appointment</a>
+                </div>
+
+                <button id="mobile-menu-button" class="md:hidden focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="md:hidden hidden py-4">
+                <div class="flex flex-col space-y-4">
+                    <a href="#home" class="text-gray-700 hover:text-red-500 transition">Home</a>
+                    <a href="#services" class="text-gray-700 hover:text-red-500 transition">Services</a>
+                    <a href="#barbers" class="text-gray-700 hover:text-red-500 transition">Our Barbers</a>
+                    <a href="#gallery" class="text-gray-700 hover:text-red-500 transition">Gallery</a>
+                    <a href="#booking" class="text-gray-700 hover:text-red-500 transition">Book Now</a>
+                    <a href="#booking"
+                        class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-full transition text-center">Book
+                        Appointment</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home"
+        class="hero-bg min-h-screen flex items-center justify-center text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/30"></div>
+        <div class="container mx-auto px-4 sm:px-6 z-10 py-20">
+            <div class="max-w-3xl mx-auto text-center fade-in">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight">
+                    Precision <span class="text-red-400">Haircuts</span> For The Modern Man
+                </h1>
+                <p class="text-xl sm:text-2xl mb-8 max-w-2xl mx-auto">
+                    Experience luxury grooming with our master barbers. Book your appointment today and transform your
+                    look.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#booking"
+                        class="bg-red-500 hover:bg-red-600 text-white px-8 py-3 rounded-full text-lg font-medium transition transform hover:scale-105 shadow-lg hover:shadow-xl">
+                        Book Now
+                    </a>
+                    <a href="#services"
+                        class="border-2 border-white hover:bg-white/10 text-white px-8 py-3 rounded-full text-lg font-medium transition transform hover:scale-105">
+                        Our Services
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Animated scissors -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 scissor-animate">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-white" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879M12 12L9.121 9.121m0 5.758a3 3 0 10-4.243 4.243 3 3 0 004.243-4.243zm0-5.758a3 3 0 10-4.243-4.243 3 3 0 004.243 4.243z" />
+            </svg>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">Our <span
+                        class="text-red-500">Services</span></h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    We offer a wide range of grooming services tailored to your needs. Each service is performed by our
+                    certified master barbers.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div
+                    class="bg-gray-50 rounded-xl p-6 shadow-md hover:shadow-xl transition duration-300 transform hover:-translate-y-2 fade-in delay-100">
+                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4 mx-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-500" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879M12 12L9.121 9.121m0 5.758a3 3 0 10-4.243 4.243 3 3 0 004.243-4.243zm0-5.758a3 3 0 10-4.243-4.243 3 3 0 004.243 4.243z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-3">Classic Haircut</h3>
+                    <p class="text-gray-600 text-center mb-4">
+                        A traditional haircut with modern techniques for a clean, polished look.
+                    </p>
+                    <div class="text-center">
+                        <span class="text-red-500 font-bold text-xl">₹350</span>
+                        <span class="text-gray-500 text-sm ml-1">/ session</span>
+                    </div>
+                </div>
+
+                <!-- Service 2 -->
+                <div
+                    class="bg-gray-50 rounded-xl p-6 shadow-md hover:shadow-xl transition duration-300 transform hover:-translate-y-2 fade-in delay-200">
+                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4 mx-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-500" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-3">Beard Trim & Shape</h3>
+                    <p class="text-gray-600 text-center mb-4">
+                        Professional beard grooming to maintain your style with precision tools.
+                    </p>
+                    <div class="text-center">
+                        <span class="text-red-500 font-bold text-xl">₹250</span>
+                        <span class="text-gray-500 text-sm ml-1">/ session</span>
+                    </div>
+                </div>
+
+                <!-- Service 3 -->
+                <div
+                    class="bg-gray-50 rounded-xl p-6 shadow-md hover:shadow-xl transition duration-300 transform hover:-translate-y-2 fade-in delay-300">
+                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4 mx-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-500" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-3">Hot Towel Shave</h3>
+                    <p class="text-gray-600 text-center mb-4">
+                        The ultimate traditional shave experience with hot towels and premium products.
+                    </p>
+                    <div class="text-center">
+                        <span class="text-red-500 font-bold text-xl">₹450</span>
+                        <span class="text-gray-500 text-sm ml-1">/ session</span>
+                    </div>
+                </div>
+
+                <!-- Service 4 -->
+                <div
+                    class="bg-gray-50 rounded-xl p-6 shadow-md hover:shadow-xl transition duration-300 transform hover:-translate-y-2 fade-in delay-100">
+                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4 mx-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-500" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-3">Hair Coloring</h3>
+                    <p class="text-gray-600 text-center mb-4">
+                        Professional hair coloring services using premium, ammonia-free products.
+                    </p>
+                    <div class="text-center">
+                        <span class="text-red-500 font-bold text-xl">₹650+</span>
+                        <span class="text-gray-500 text-sm ml-1">/ session</span>
+                    </div>
+                </div>
+
+                <!-- Service 5 -->
+                <div
+                    class="bg-gray-50 rounded-xl p-6 shadow-md hover:shadow-xl transition duration-300 transform hover:-translate-y-2 fade-in delay-200">
+                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4 mx-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-500" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-3">Kids Haircut</h3>
+                    <p class="text-gray-600 text-center mb-4">
+                        Fun and friendly haircuts for kids in a comfortable environment.
+                    </p>
+                    <div class="text-center">
+                        <span class="text-red-500 font-bold text-xl">₹250</span>
+                        <span class="text-gray-500 text-sm ml-1">/ session</span>
+                    </div>
+                </div>
+
+                <!-- Service 6 -->
+                <div
+                    class="bg-gray-50 rounded-xl p-6 shadow-md hover:shadow-xl transition duration-300 transform hover:-translate-y-2 fade-in delay-300">
+                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4 mx-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-500" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-3">Deluxe Package</h3>
+                    <p class="text-gray-600 text-center mb-4">
+                        Haircut, beard trim, hot towel treatment, and styling for the complete experience.
+                    </p>
+                    <div class="text-center">
+                        <span class="text-red-500 font-bold text-xl">₹850</span>
+                        <span class="text-gray-500 text-sm ml-1">/ session</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="py-16 md:py-24 bg-gray-100">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">Our <span
+                        class="text-red-500">Process</span></h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Experience the EliteCuts difference with our carefully crafted grooming process.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Step 1 -->
+                <div class="process-step bg-white rounded-xl p-6 text-center fade-in delay-100">
+                    <div
+                        class="w-20 h-20 bg-red-500 rounded-full flex items-center justify-center mb-4 mx-auto text-white text-2xl font-bold">
+                        1</div>
+                    <h3 class="text-xl font-bold mb-3">Consultation</h3>
+                    <p class="text-gray-600">
+                        We discuss your style preferences and recommend the perfect cut for your face shape and hair
+                        type.
+                    </p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="process-step bg-white rounded-xl p-6 text-center fade-in delay-200">
+                    <div
+                        class="w-20 h-20 bg-red-500 rounded-full flex items-center justify-center mb-4 mx-auto text-white text-2xl font-bold">
+                        2</div>
+                    <h3 class="text-xl font-bold mb-3">Precision Cut</h3>
+                    <p class="text-gray-600">
+                        Our master barbers work their magic with expert techniques and premium tools.
+                    </p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="process-step bg-white rounded-xl p-6 text-center fade-in delay-300">
+                    <div
+                        class="w-20 h-20 bg-red-500 rounded-full flex items-center justify-center mb-4 mx-auto text-white text-2xl font-bold">
+                        3</div>
+                    <h3 class="text-xl font-bold mb-3">Hot Towel Treatment</h3>
+                    <p class="text-gray-600">
+                        Relax with our signature hot towel treatment to open pores and soothe skin.
+                    </p>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="process-step bg-white rounded-xl p-6 text-center fade-in delay-400">
+                    <div
+                        class="w-20 h-20 bg-red-500 rounded-full flex items-center justify-center mb-4 mx-auto text-white text-2xl font-bold">
+                        4</div>
+                    <h3 class="text-xl font-bold mb-3">Style & Finish</h3>
+                    <p class="text-gray-600">
+                        We apply premium products and provide styling tips to maintain your look at home.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Barbers Section -->
+    <section id="barbers" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">Meet Our <span
+                        class="text-red-500">Barbers</span></h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Our master barbers have years of experience and a passion for perfection.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Barber 1 -->
+                <div class="group relative overflow-hidden rounded-xl shadow-lg fade-in delay-100">
+                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                        alt="Barber 1" class="w-full h-96 object-cover transition duration-500 group-hover:scale-105">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent flex flex-col justify-end p-6">
+                        <h3 class="text-2xl font-bold text-white">Marcus Johnson</h3>
+                        <p class="text-red-400 font-medium mb-2">Master Barber</p>
+                        <p class="text-white/80 mb-4">15+ years experience specializing in classic and modern cuts.</p>
+                        <div class="flex space-x-3">
+                            <a href="#" class="text-white hover:text-red-400 transition">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="text-white hover:text-red-400 transition">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Barber 2 -->
+                <div class="group relative overflow-hidden rounded-xl shadow-lg fade-in delay-200">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                        alt="Barber 2" class="w-full h-96 object-cover transition duration-500 group-hover:scale-105">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent flex flex-col justify-end p-6">
+                        <h3 class="text-2xl font-bold text-white">David Rodriguez</h3>
+                        <p class="text-red-400 font-medium mb-2">Beard Specialist</p>
+                        <p class="text-white/80 mb-4">Expert in beard grooming and straight razor shaves.</p>
+                        <div class="flex space-x-3">
+                            <a href="#" class="text-white hover:text-red-400 transition">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="text-white hover:text-red-400 transition">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Barber 3 -->
+                <div class="group relative overflow-hidden rounded-xl shadow-lg fade-in delay-300">
+                    <img src="https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                        alt="Barber 3" class="w-full h-96 object-cover transition duration-500 group-hover:scale-105">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent flex flex-col justify-end p-6">
+                        <h3 class="text-2xl font-bold text-white">Jamal Williams</h3>
+                        <p class="text-red-400 font-medium mb-2">Style Consultant</p>
+                        <p class="text-white/80 mb-4">Specializes in contemporary styles and hair treatments.</p>
+                        <div class="flex space-x-3">
+                            <a href="#" class="text-white hover:text-red-400 transition">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="text-white hover:text-red-400 transition">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-16 md:py-24 bg-gray-100">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">Our <span
+                        class="text-red-500">Gallery</span></h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Browse through our recent work and get inspired for your next haircut.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <!-- Gallery Item 1 -->
+                <div class="group relative overflow-hidden rounded-lg shadow-md fade-in delay-100">
+                    <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                        alt="Gallery 1" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
+                    <div
+                        class="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 2 -->
+                <div class="group relative overflow-hidden rounded-lg shadow-md fade-in delay-150">
+                    <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                        alt="Gallery 2" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
+                    <div
+                        class="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 3 -->
+                <div class="group relative overflow-hidden rounded-lg shadow-md fade-in delay-200">
+                    <img src="https://images.unsplash.com/photo-1519699047748-de8e457a634e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                        alt="Gallery 3" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
+                    <div
+                        class="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 4 -->
+                <div class="group relative overflow-hidden rounded-lg shadow-md fade-in delay-250">
+                    <img src="https://images.unsplash.com/photo-1583864697784-a0efc8379f70?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                        alt="Gallery 4" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
+                    <div
+                        class="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 5 -->
+                <div class="group relative overflow-hidden rounded-lg shadow-md fade-in delay-300">
+                    <img src="https://images.unsplash.com/photo-1595475884562-073c30d45670?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                        alt="Gallery 5" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
+                    <div
+                        class="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                </div>
+
+                
+
+                <!-- Gallery Item 7 -->
+                <div class="group relative overflow-hidden rounded-lg shadow-md fade-in delay-400">
+                    <img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                        alt="Gallery 7" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
+                    <div
+                        class="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 8 -->
+                <div class="group relative overflow-hidden rounded-lg shadow-md fade-in delay-450">
+                    <img src="https://images.unsplash.com/photo-1588514899099-e2df6951dde6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                        alt="Gallery 8" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
+                    <div
+                        class="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12 fade-in">
+                <a href="#" class="inline-flex items-center text-red-500 font-medium hover:text-red-600 transition">
+                    View More Works
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20"
+                        fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">Client <span
+                        class="text-red-500">Testimonials</span></h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Hear what our clients say about their experience at EliteCuts.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-gray-50 rounded-xl p-6 shadow-md fade-in delay-100">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Client"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">Michael T.</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">
+                        "Best haircut I've ever had! Marcus took the time to understand exactly what I wanted and
+                        delivered beyond my expectations. The atmosphere is great too."
+                    </p>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-gray-50 rounded-xl p-6 shadow-md fade-in delay-200">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="https://randomuser.me/api/portraits/men/44.jpg" alt="Client"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">James L.</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">
+                        "David's beard trim and shaping is next level. I've never had such a precise and comfortable
+                        experience. The hot towel treatment is worth every penny."
+                    </p>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="bg-gray-50 rounded-xl p-6 shadow-md fade-in delay-300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="https://randomuser.me/api/portraits/men/68.jpg" alt="Client"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">Robert G.</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">
+                        "Jamal gave me a modern cut that perfectly suits my face shape. The attention to detail is
+                        incredible. I'll definitely be coming back regularly."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section id="booking" class="py-16 md:py-24 bg-gray-100">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-xl overflow-hidden fade-in">
+                <div class="md:flex">
+                    <!-- Booking Form -->
+                    <div class="w-full md:w-1/2 p-8 booking-form">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-6">Book an <span
+                                class="text-red-500">Appointment</span></h2>
+                        <form>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 mb-2" for="name">Full Name</label>
+                                <input type="text" id="name"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 mb-2" for="email">Email</label>
+                                <input type="email" id="email"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 mb-2" for="phone">Phone Number</label>
+                                <input type="tel" id="phone"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 mb-2" for="service">Service</label>
+                                <select id="service"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                                    <option value="">Select a service</option>
+                                    <option value="classic">Classic Haircut (₹350)</option>
+                                    <option value="beard">Beard Trim & Shape (₹250)</option>
+                                    <option value="shave">Hot Towel Shave (₹450)</option>
+                                    <option value="coloring">Hair Coloring (₹650+)</option>
+                                    <option value="kids">Kids Haircut (₹250)</option>
+                                    <option value="deluxe">Deluxe Package (₹850)</option>
+                                </select>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 mb-2" for="barber">Preferred Barber</label>
+                                <select id="barber"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                                    <option value="">No preference</option>
+                                    <option value="marcus">Marcus Johnson</option>
+                                    <option value="david">David Rodriguez</option>
+                                    <option value="jamal">Jamal Williams</option>
+                                </select>
+                            </div>
+                            <div class="mb-6">
+                                <label class="block text-gray-700 mb-2" for="date">Date & Time</label>
+                                <input type="datetime-local" id="date"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                            </div>
+                            <button type="submit"
+                                class="w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-lg font-medium transition shadow-lg hover:shadow-xl">
+                                Confirm Booking
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Booking Info -->
+                    <div class="w-full md:w-1/2 bg-red-500 text-white p-8 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-4">Contact Info</h3>
+                            <div class="mb-6">
+                                <div class="flex items-center mb-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                    <span>123 Barber Street, Grooming City, GC 12345</span>
+                                </div>
+                                <div class="flex items-center mb-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                    </svg>
+                                    <span>(123) 456-7890</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                    </svg>
+                                    <span>bookings@elitecuts.com</span>
+                                </div>
+                            </div>
+
+                            <h3 class="text-2xl font-bold mb-4">Opening Hours</h3>
+                            <div class="space-y-2">
+                                <div class="flex justify-between">
+                                    <span>Monday - Friday</span>
+                                    <span>9:00 AM - 7:00 PM</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Saturday</span>
+                                    <span>10:00 AM - 5:00 PM</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Sunday</span>
+                                    <span>Closed</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-8">
+                            <h4 class="font-bold mb-3">Follow Us</h4>
+                            <div class="flex space-x-4">
+                                <a href="#"
+                                    class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30 transition">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="#"
+                                    class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30 transition">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="#"
+                                    class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30 transition">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#"
+                                    class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30 transition">
+                                    <i class="fab fa-tiktok"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">Frequently Asked <span
+                        class="text-red-500">Questions</span></h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Find answers to common questions about our services and policies.
+                </p>
+            </div>
+
+            <div class="max-w-3xl mx-auto">
+                <!-- FAQ Item 1 -->
+                <div class="mb-6 border-b border-gray-200 pb-6 fade-in delay-100">
+                    <button class="flex justify-between items-center w-full text-left focus:outline-none group">
+                        <h3 class="text-lg font-medium text-gray-800 group-hover:text-red-500 transition">How far in
+                            advance should I book an appointment?</h3>
+                        <svg class="w-5 h-5 text-gray-500 group-hover:text-red-500 transition transform group-focus:-rotate-180"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="mt-2">
+                        <p class="text-gray-600">
+                            We recommend booking at least 3-5 days in advance to secure your preferred time slot,
+                            especially for weekends which tend to fill up quickly. For same-day appointments, please
+                            call us to check availability.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="mb-6 border-b border-gray-200 pb-6 fade-in delay-150">
+                    <button class="flex justify-between items-center w-full text-left focus:outline-none group">
+                        <h3 class="text-lg font-medium text-gray-800 group-hover:text-red-500 transition">What is your
+                            cancellation policy?</h3>
+                        <svg class="w-5 h-5 text-gray-500 group-hover:text-red-500 transition transform group-focus:-rotate-180"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="mt-2">
+                        <p class="text-gray-600">
+                            We require at least 24 hours notice for cancellations or rescheduling. Cancellations made
+                            with less than 24 hours notice may be subject to a cancellation fee of 50% of the service
+                            price. No-shows will be charged the full service amount.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="mb-6 border-b border-gray-200 pb-6 fade-in delay-200">
+                    <button class="flex justify-between items-center w-full text-left focus:outline-none group">
+                        <h3 class="text-lg font-medium text-gray-800 group-hover:text-red-500 transition">Do you accept
+                            walk-ins?</h3>
+                        <svg class="w-5 h-5 text-gray-500 group-hover:text-red-500 transition transform group-focus:-rotate-180"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="mt-2">
+                        <p class="text-gray-600">
+                            We do accept walk-ins based on availability, but appointments are strongly recommended to
+                            guarantee service. Walk-in clients may experience longer wait times during peak hours. You
+                            can call ahead to check current wait times.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="mb-6 border-b border-gray-200 pb-6 fade-in delay-250">
+                    <button class="flex justify-between items-center w-full text-left focus:outline-none group">
+                        <h3 class="text-lg font-medium text-gray-800 group-hover:text-red-500 transition">What COVID-19
+                            safety measures do you have in place?</h3>
+                        <svg class="w-5 h-5 text-gray-500 group-hover:text-red-500 transition transform group-focus:-rotate-180"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="mt-2">
+                        <p class="text-gray-600">
+                            We follow all local health guidelines, including regular sanitization of tools and
+                            workstations, mandatory masks for staff, and optional masks for clients. All tools are
+                            sterilized between clients, and we've implemented spaced-out scheduling to reduce crowding.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="mb-6 fade-in delay-300">
+                    <button class="flex justify-between items-center w-full text-left focus:outline-none group">
+                        <h3 class="text-lg font-medium text-gray-800 group-hover:text-red-500 transition">Do you offer
+                            gift cards?</h3>
+                        <svg class="w-5 h-5 text-gray-500 group-hover:text-red-500 transition transform group-focus:-rotate-180"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="mt-2">
+                        <p class="text-gray-600">
+                            Yes! We offer physical and digital gift cards in any denomination. They can be purchased
+                            in-salon or online and never expire. Gift cards make perfect gifts for birthdays, holidays,
+                            or just to show someone you care about their grooming needs.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 md:py-24 bg-red-500 text-white">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="max-w-4xl mx-auto text-center fade-in">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-6">Ready for Your Next <span class="text-white">Hair
+                        Transformation?</span></h2>
+                <p class="text-xl mb-8 max-w-2xl mx-auto">
+                    Book your appointment today and experience the EliteCuts difference. Your perfect haircut is just a
+                    click away.
+                </p>
+                <a href="#booking"
+                    class="inline-block bg-white text-red-500 hover:bg-gray-100 px-8 py-3 rounded-full text-lg font-medium transition transform hover:scale-105 shadow-lg hover:shadow-xl">
+                    Book Now
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-16 pb-8">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                <!-- About -->
+                <div class="fade-in delay-100">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-full barber-pole mr-3"></div>
+                        <a href="#" class="text-2xl font-bold text-white">Elite<span
+                                class="text-red-500">Cuts</span></a>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        Premium grooming services for the modern man. Experience the art of barbering with our master
+                        stylists.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="fade-in delay-150">
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition">Services</a></li>
+                        <li><a href="#barbers" class="text-gray-400 hover:text-white transition">Our Barbers</a></li>
+                        <li><a href="#gallery" class="text-gray-400 hover:text-white transition">Gallery</a></li>
+                        <li><a href="#booking" class="text-gray-400 hover:text-white transition">Book Now</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div class="fade-in delay-200">
+                    <h3 class="text-lg font-bold mb-4">Services</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Classic Haircut</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Beard Trim & Shape</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Hot Towel Shave</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Hair Coloring</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Deluxe Package</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div class="fade-in delay-250">
+                    <h3 class="text-lg font-bold mb-4">Contact Us</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <span class="text-gray-400">123 Barber Street, Grooming City</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                            </svg>
+                            <span class="text-gray-400">(123) 456-7890</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                            <span class="text-gray-400">bookings@elitecuts.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center fade-in">
+                <p class="text-gray-400 mb-4 md:mb-0">
+                    &copy; 2023 EliteCuts. All rights reserved.
+                </p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">Terms of Service</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top"
+        class="fixed bottom-8 right-8 bg-red-500 text-white p-3 rounded-full shadow-lg opacity-0 invisible transition-all duration-300 hover:bg-red-600">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+    </button>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+    
+        // Back to top button
+        const backToTopButton = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+    
+        backToTopButton.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+    
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+    
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+    
+                    // Close mobile menu if open
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+    
+        // Create floating hair strands
+        function createHairStrands() {
+            const container = document.getElementById('hair-strands');
+            const strandCount = 15;
+    
+            for (let i = 0; i < strandCount; i++) {
+                const strand = document.createElement('div');
+                strand.classList.add('hair-strand');
+    
+                // Random properties
+                const left = Math.random() * 100;
+                const width = Math.random() * 4 + 1;
+                const height = Math.random() * 60 + 20;
+                const delay = Math.random() * 5;
+                const duration = Math.random() * 10 + 10;
+                const opacity = Math.random() * 0.5 + 0.3;
+                const color = `hsl(${Math.random() * 30 + 20}, 70%, 50%)`;
+    
+                strand.style.left = `${left}%`;
+                strand.style.width = `${width}px`;
+                strand.style.height = `${height}px`;
+                strand.style.animationDelay = `${delay}s`;
+                strand.style.animationDuration = `${duration}s`;
+                strand.style.opacity = opacity;
+                strand.style.backgroundColor = color;
+    
+                container.appendChild(strand);
+            }
+        }
+    
+        // Call the function when the page loads
+        window.addEventListener('load', createHairStrands);
+    
+        // Intersection Observer for fade-in animations
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const appearOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+    
+        const appearOnScroll = new IntersectionObserver(function (entries, appearOnScroll) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return;
+                } else {
+                    entry.target.classList.add('appear');
+                    appearOnScroll.unobserve(entry.target);
+                }
+            });
+        }, appearOptions);
+    
+        fadeElements.forEach(fader => {
+            appearOnScroll.observe(fader);
+        });
+    
+        // FAQ accordion functionality
+        document.querySelectorAll('.faq button').forEach(button => {
+            button.addEventListener('click', () => {
+                const faqItem = button.parentElement;
+                const answer = button.nextElementSibling;
+    
+                // Close all other FAQ items
+                document.querySelectorAll('.faq div').forEach(item => {
+                    if (item !== faqItem) {
+                        const otherButton = item.querySelector('button');
+                        const otherAnswer = otherButton.nextElementSibling;
+    
+                        otherButton.setAttribute('aria-expanded', 'false');
+                        otherAnswer.style.maxHeight = null;
+                    }
+                });
+    
+                // Toggle current FAQ item
+                const isExpanded = button.getAttribute('aria-expanded') === 'true';
+                button.setAttribute('aria-expanded', !isExpanded);
+    
+                if (!isExpanded) {
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                } else {
+                    answer.style.maxHeight = null;
+                }
+            });
+        });
+    
+        // Form submission handling
+        const bookingForm = document.querySelector('.booking-form form');
+        if (bookingForm) {
+            bookingForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+    
+                // Get form values
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const service = document.getElementById('service').value;
+    
+                // Here you would typically send the data to a server
+                // For demo purposes, we'll just show an alert
+                alert(`Thank you, ${name}! Your booking for ${service} has been received. We'll send confirmation details to ${email}.`);
+    
+                // Reset form
+                this.reset();
+            });
+        }
+    </script>
+    
+</body>
+</html>

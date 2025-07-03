@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decora API Documentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .response-box {
+            max-height: 400px;
+            overflow: auto;
+            background-color: #f8fafc;
+            border-radius: 0.5rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .response-success {
+            color: #10b981;
+            background-color: #ecfdf5;
+        }
+
+        .response-error {
+            color: #ef4444;
+            background-color: #fef2f2;
+        }
+
+        .method-get {
+            background-color: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .method-post {
+            background-color: #d1fae5;
+            color: #047857;
+        }
+
+        .method-put {
+            background-color: #fef3c7;
+            color: #b45309;
+        }
+
+        .method-delete {
+            background-color: #fee2e2;
+            color: #b91c1c;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #4f46e5;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .sidebar {
+            scrollbar-width: thin;
+            scrollbar-color: #c7d2fe #f1f5f9;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background-color: #c7d2fe;
+            border-radius: 3px;
+        }
+
+        /* Improved mobile responsiveness */
+        @media (max-width: 1024px) {
+            .lg\:flex-row {
+                flex-direction: column;
+            }
+
+            .lg\:w-1\/4,
+            .lg\:w-3\/4 {
+                width: 100%;
+            }
+
+            .sidebar {
+                position: static;
+                max-height: none;
+                margin-bottom: 2rem;
+            }
+
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .response-box {
+                max-height: 300px;
+            }
+        }
+
+        @media (max-width: 640px) {
+
+            .text-4xl,
+            .text-5xl {
+                font-size: 2rem;
+            }
+
+            .text-xl {
+                font-size: 1.1rem;
+            }
+
+            .p-8 {
+                padding: 1.5rem;
+            }
+
+            .flex-col.sm\:flex-row {
+                flex-direction: column;
+            }
+
+            .flex-col.sm\:flex-row a {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+
+            #endpoint-url {
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-indigo-600 text-white p-2 rounded-lg">
+                        <i class="fas fa-store text-xl"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold text-gray-800">Decora API</h1>
+                </div>
+                <div class="hidden md:block">
+                    <nav>
+                        <ul class="flex space-x-4 lg:space-x-8">
+                            <li><a href="#overview"
+                                    class="nav-link text-gray-600 hover:text-indigo-600 transition">Overview</a></li>
+                            <li><a href="#authentication"
+                                    class="nav-link text-gray-600 hover:text-indigo-600 transition">Authentication</a>
+                            </li>
+                            <li><a href="#products"
+                                    class="nav-link text-gray-600 hover:text-indigo-600 transition">Products</a></li>
+                            <li><a href="#users"
+                                    class="nav-link text-gray-600 hover:text-indigo-600 transition">Users</a></li>
+                            <li><a href="#contact"
+                                    class="nav-link text-gray-600 hover:text-indigo-600 transition">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <button class="md:hidden text-gray-600" id="mobile-menu-button">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="md:hidden hidden bg-white shadow-lg" id="mobile-menu">
+        <div class="container mx-auto px-4 py-3">
+            <ul class="space-y-3">
+                <li><a href="#overview" class="block py-2 text-gray-600 hover:text-indigo-600 transition">Overview</a>
+                </li>
+                <li><a href="#authentication"
+                        class="block py-2 text-gray-600 hover:text-indigo-600 transition">Authentication</a></li>
+                <li><a href="#products" class="block py-2 text-gray-600 hover:text-indigo-600 transition">Products</a>
+                </li>
+                <li><a href="#users" class="block py-2 text-gray-600 hover:text-indigo-600 transition">Users</a></li>
+                <li><a href="#contact" class="block py-2 text-gray-600 hover:text-indigo-600 transition">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white py-12 md:py-16">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">Decora Home Decor API</h1>
+                <p class="text-lg md:text-xl mb-6 md:mb-8">
+                    The complete solution for integrating home decoration products into your applications.
+                    Powerful, scalable, and developer-friendly REST API for modern e-commerce platforms.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-3 md:gap-4">
+                    <a href="#try-it-out"
+                        class="bg-white text-indigo-700 px-4 md:px-6 py-2 md:py-3 rounded-lg font-semibold hover:bg-gray-100 transition shadow-md">
+                        <i class="fas fa-bolt mr-2"></i> Try It Out
+                    </a>
+                    <a href="#documentation"
+                        class="bg-indigo-700 text-white px-4 md:px-6 py-2 md:py-3 rounded-lg font-semibold hover:bg-indigo-800 transition shadow-md">
+                        <i class="fas fa-book mr-2"></i> Documentation
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8 md:py-12 flex flex-col lg:flex-row gap-6 md:gap-8">
+        <!-- Sidebar -->
+        <aside
+            class="lg:w-1/4 bg-white p-4 md:p-6 rounded-xl shadow-sm h-fit lg:sticky lg:top-24 sidebar overflow-y-auto max-h-[calc(100vh-6rem)]">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">API Documentation</h2>
+            <ul class="space-y-2">
+                <li>
+                    <a href="#overview"
+                        class="block py-2 px-3 text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 rounded transition">Overview</a>
+                </li>
+                <li>
+                    <a href="#authentication"
+                        class="block py-2 px-3 text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 rounded transition">Authentication</a>
+                </li>
+                <li>
+                    <a href="#products"
+                        class="block py-2 px-3 text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 rounded transition">Products</a>
+                    <ul class="ml-4 mt-1 space-y-1">
+                        <li><a href="#get-all-products"
+                                class="block py-1 px-3 text-sm text-gray-500 hover:text-indigo-600 rounded transition">Get
+                                All Products</a></li>
+                        <li><a href="#get-product-by-id"
+                                class="block py-1 px-3 text-sm text-gray-500 hover:text-indigo-600 rounded transition">Get
+                                Product by ID</a></li>
+                        <li><a href="#create-product"
+                                class="block py-1 px-3 text-sm text-gray-500 hover:text-indigo-600 rounded transition">Create
+                                Product</a></li>
+                        <li><a href="#update-product"
+                                class="block py-1 px-3 text-sm text-gray-500 hover:text-indigo-600 rounded transition">Update
+                                Product</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#users"
+                        class="block py-2 px-3 text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 rounded transition">Users</a>
+                    <ul class="ml-4 mt-1 space-y-1">
+                        <li><a href="#register-user"
+                                class="block py-1 px-3 text-sm text-gray-500 hover:text-indigo-600 rounded transition">Register
+                                User</a></li>
+                        <li><a href="#login-user"
+                                class="block py-1 px-3 text-sm text-gray-500 hover:text-indigo-600 rounded transition">Login
+                                User</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#try-it-out"
+                        class="block py-2 px-3 text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 rounded transition">Try
+                        It Out</a>
+                </li>
+                <li>
+                    <a href="#contact"
+                        class="block py-2 px-3 text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 rounded transition">Contact</a>
+                </li>
+            </ul>
+
+            <div class="mt-6 md:mt-8 pt-4 md:pt-6 border-t border-gray-200">
+                <h3 class="text-lg font-semibold text-gray-800 mb-3">API Status</h3>
+                <div class="flex items-center space-x-2">
+                    <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                    <span class="text-gray-600">Operational</span>
+                </div>
+                <div class="mt-3 md:mt-4">
+                    <a href="#" class="text-indigo-600 hover:text-indigo-800 text-sm flex items-center">
+                        <i class="fas fa-history mr-2"></i> View API Status History
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Documentation Content -->
+        <main class="lg:w-3/4 space-y-8 md:space-y-12">
+            <!-- Overview Section -->
+            <section id="overview" class="bg-white rounded-xl shadow-sm p-6 md:p-8">
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 md:mb-6">Overview</h2>
+                <div class="prose max-w-none text-gray-600">
+                    <p>The Decora API provides a comprehensive interface for managing home decoration products, user
+                        accounts, and e-commerce functionality. Our RESTful API follows industry best practices and
+                        returns JSON-encoded responses.</p>
+
+                    <h3 class="text-lg md:text-xl font-semibold text-gray-800 mt-4 md:mt-6 mb-2 md:mb-3">Base URL</h3>
+                    <div class="bg-gray-50 p-3 md:p-4 rounded-lg">
+                        <code class="text-indigo-600">https://decora-backend.vercel.app/api</code>
+                    </div>
+
+                    <h3 class="text-lg md:text-xl font-semibold text-gray-800 mt-4 md:mt-6 mb-2 md:mb-3">Response Format
+                    </h3>
+                    <p>All API responses follow a consistent JSON format:</p>
+                    <div class="bg-gray-50 p-3 md:p-4 rounded-lg response-box">
+                        <pre><code>{
+  "success": true,        // Boolean indicating success/failure
+  "message": "Success",   // Human-readable message
+  "data": { ... },        // The actual data payload
+  "meta": { ... }         // Pagination or metadata (when applicable)
+}</code></pre>
+                    </div>
+
+                    <h3 class="text-lg md:text-xl font-semibold text-gray-800 mt-4 md:mt-6 mb-2 md:mb-3">Error Handling
+                    </h3>
+                    <p>Errors return standard HTTP status codes along with a JSON response:</p>
+                    <div class="bg-gray-50 p-3 md:p-4 rounded-lg response-box">
+                        <pre><code>{
+  "success": false,
+  "message": "Product not found",
+  "error": {
+    "code": "PRODUCT_404",
+    "details": "The requested product ID does not exist"
+  }
+}</code></pre>
+                    </div>
+
+                    <h3 class="text-lg md:text-xl font-semibold text-gray-800 mt-4 md:mt-6 mb-2 md:mb-3">Rate Limiting
+                    </h3>
+                    <p>API requests are limited to:</p>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li>100 requests per minute for authenticated users</li>
+                        <li>30 requests per minute for unauthenticated access</li>
+                    </ul>
+                    <p class="mt-2">Exceeding these limits will return a <code
+                            class="bg-gray-100 px-1 rounded">429 Too Many Requests</code> response.</p>
+                </div>
+            </section>
+
+            <!-- Authentication Section -->
+            <section id="authentication" class="bg-white rounded-xl shadow-sm p-6 md:p-8">
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 md:mb-6">Authentication</h2>
+                <div class="prose max-w-none text-gray-600">
+                    <p>Most Decora API endpoints require authentication using JWT (JSON Web Tokens). To authenticate:
+                    </p>
+
+                    <ol class="list-decimal pl-5 space-y-2">
+                        <li>Register a user account or login with existing credentials</li>
+                        <li>Receive a JWT token in the response</li>
+                        <li>Include this token in the <code class="bg-gray-100 px-1 rounded">Authorization</code> header
+                            of subsequent requests</li>
+                    </ol>
+
+                    <div class="bg-gray-50 p-3 md:p-4 rounded-lg mt-3 md:mt-4">
+                        <code class="text-gray-800">Authorization: Bearer your.jwt.token.here</code>
+                    </div>
+
+                    <div class="mt-4 md:mt-6 p-3 md:p-4 border-l-4 border-indigo-400 bg-indigo-50">
+                        <h4 class="font-semibold text-indigo-800 mb-2"><i class="fas fa-shield-alt mr-2"></i>Security
+                            Note</h4>
+                        <p class="text-indigo-700">Always keep your API tokens secure. Never expose them in client-side
+                            code or public repositories. Tokens expire after 24 hours, after which you'll need to login
+                            again.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Products Section -->
+            <section id="products" class="bg-white rounded-xl shadow-sm p-6 md:p-8">
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 md:mb-6">Products API</h2>
+                <p class="text-gray-600 mb-6 md:mb-8">Manage your home decoration product catalog with these endpoints.
+                    Products
+                    can include furniture, lighting, wall art, and other home decor items.</p>
+
+                <!-- Get All Products -->
+                <div id="get-all-products" class="mb-8 md:mb-12">
+                    <div class="flex flex-col md:flex-row md:items-start justify-between mb-3 md:mb-4 gap-2">
+                        <div>
+                            <div class="flex items-center mb-1 md:mb-2">
+                                <span
+                                    class="method-get px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-mono mr-2 md:mr-3">GET</span>
+                                <h3 class="text-lg md:text-xl font-semibold text-gray-800">Get All Products</h3>
+                            </div>
+                            <p class="text-gray-600 text-sm md:text-base">Retrieve a paginated list of all available
+                                products. Results can be
+                                filtered by category, price range, and sorted by various fields.</p>
+                        </div>
+                        <button onclick="tryEndpoint('https://decora-backend.vercel.app/api/products/all', 'GET')"
+                            class="bg-indigo-600 text-white px-3 md:px-4 py-1 md:py-2 rounded-lg hover:bg-indigo-700 transition whitespace-nowrap text-sm md:text-base">
+                            Try it <i class="fas fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+
+                    <div class="bg-gray-50 p-3 md:p-4 rounded-lg mb-3 md:mb-4">
+                        <code
+                            class="text-gray-800 text-sm md:text-base">https://decora-backend.vercel.app/api/products/all</code>
+                    </div>
+
+                    <h4 class="font-medium text-gray-700 mt-3 md:mt-4 mb-1 md:mb-2">Query Parameters</h4>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-2 px-3 md:px-4 border-b text-left text-sm">Parameter</th>
+                                    <th class="py-2 px-3 md:px-4 border-b text-left text-sm">Type</th>
+                                    <th class="py-2 px-3 md:px-4 border-b text-left text-sm">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">page</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">integer</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Page number for pagination (default:
+                                        1)</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">limit</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">integer</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Number of items per page (default:
+                                        10, max: 50)</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">category</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">string</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Filter by product category (e.g.,
+                                        "Lighting",
+                                        "Furniture")</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">minPrice</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">number</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Minimum price filter</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">maxPrice</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">number</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Maximum price filter</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">sort</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">string</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Sort field (e.g., "price", "-price"
+                                        for descending)
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4 class="font-medium text-gray-700 mt-4 md:mt-6 mb-1 md:mb-2">Example Response</h4>
+                    <div class="bg-gray-50 p-3 md:p-4 rounded-lg response-box">
+                        <pre><code>{
+  "success": true,
+  "message": "Products retrieved successfully",
+  "data": [
+    {
+      "_id": "67b9dbfdd1d649814f77c06b",
+      "name": "Modern Wall Lamp",
+      "price": 129.99,
+      "description": "Contemporary wall lamp with dimmable LED lighting",
+      "category": "Lighting",
+      "rating": 4.5,
+      "stock": 42,
+      "imageUrl": "https://res.cloudinary.com/.../lamp.jpg",
+      "images": [
+        "https://res.cloudinary.com/.../lamp1.jpg",
+        "https://res.cloudinary.com/.../lamp2.jpg"
+      ],
+      "createdAt": "2023-06-15T10:30:00.000Z",
+      "updatedAt": "2023-06-15T10:30:00.000Z"
+    },
+    {
+      "_id": "67b9dbfdd1d649814f77c06c",
+      "name": "Minimalist Coffee Table",
+      "price": 249.99,
+      "description": "Scandinavian-inspired coffee table with oak finish",
+      "category": "Furniture",
+      "rating": 4.8,
+      "stock": 15,
+      "imageUrl": "https://res.cloudinary.com/.../table.jpg",
+      "images": [
+        "https://res.cloudinary.com/.../table1.jpg",
+        "https://res.cloudinary.com/.../table2.jpg"
+      ],
+      "createdAt": "2023-06-16T11:20:00.000Z",
+      "updatedAt": "2023-06-16T11:20:00.000Z"
+    }
+  ],
+  "meta": {
+    "total": 124,
+    "page": 1,
+    "limit": 10,
+    "pages": 13
+  }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Get Product by ID -->
+                <div id="get-product-by-id" class="mb-8 md:mb-12">
+                    <div class="flex flex-col md:flex-row md:items-start justify-between mb-3 md:mb-4 gap-2">
+                        <div>
+                            <div class="flex items-center mb-1 md:mb-2">
+                                <span
+                                    class="method-get px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-mono mr-2 md:mr-3">GET</span>
+                                <h3 class="text-lg md:text-xl font-semibold text-gray-800">Get Product by ID</h3>
+                            </div>
+                            <p class="text-gray-600 text-sm md:text-base">Retrieve detailed information about a specific
+                                product including
+                                all available images, specifications, and inventory status.</p>
+                        </div>
+                        <button
+                            onclick="tryEndpoint('https://decora-backend.vercel.app/api/products/67b9dbfdd1d649814f77c06b', 'GET')"
+                            class="bg-indigo-600 text-white px-3 md:px-4 py-1 md:py-2 rounded-lg hover:bg-indigo-700 transition whitespace-nowrap text-sm md:text-base">
+                            Try it <i class="fas fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+
+                    <div class="bg-gray-50 p-3 md:p-4 rounded-lg mb-3 md:mb-4">
+                        <code
+                            class="text-gray-800 text-sm md:text-base">https://decora-backend.vercel.app/api/products/{id}</code>
+                    </div>
+
+                    <h4 class="font-medium text-gray-700 mt-3 md:mt-4 mb-1 md:mb-2">Path Parameters</h4>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-2 px-3 md:px-4 border-b text-left text-sm">Parameter</th>
+                                    <th class="py-2 px-3 md:px-4 border-b text-left text-sm">Type</th>
+                                    <th class="py-2 px-3 md:px-4 border-b text-left text-sm">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">id</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">string</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">The unique identifier of the product
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4 class="font-medium text-gray-700 mt-4 md:mt-6 mb-1 md:mb-2">Example Response</h4>
+                    <div class="bg-gray-50 p-3 md:p-4 rounded-lg response-box">
+                        <pre><code>{
+  "success": true,
+  "message": "Product retrieved successfully",
+  "data": {
+    "_id": "67b9dbfdd1d649814f77c06b",
+    "name": "Modern Wall Lamp",
+    "price": 129.99,
+    "description": "Contemporary wall lamp with dimmable LED lighting...",
+    "specifications": {
+      "material": "Metal and glass",
+      "dimensions": "12 x 8 x 4 inches",
+      "weight": "2.5 lbs",
+      "color": "Brushed nickel",
+      "bulbType": "LED (included)",
+      "wattage": "15W",
+      "voltage": "110-240V"
+    },
+    "category": "Lighting",
+    "rating": 4.5,
+    "reviews": 28,
+    "stock": 42,
+    "imageUrl": "https://res.cloudinary.com/.../lamp.jpg",
+    "images": [
+      "https://res.cloudinary.com/.../lamp1.jpg",
+      "https://res.cloudinary.com/.../lamp2.jpg",
+      "https://res.cloudinary.com/.../lamp3.jpg"
+    ],
+    "createdAt": "2023-06-15T10:30:00.000Z",
+    "updatedAt": "2023-06-15T10:30:00.000Z"
+  }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Create Product -->
+                <div id="create-product" class="mb-8 md:mb-12">
+                    <div class="flex flex-col md:flex-row md:items-start justify-between mb-3 md:mb-4 gap-2">
+                        <div>
+                            <div class="flex items-center mb-1 md:mb-2">
+                                <span
+                                    class="method-post px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-mono mr-2 md:mr-3">POST</span>
+                                <h3 class="text-lg md:text-xl font-semibold text-gray-800">Create Product</h3>
+                            </div>
+                            <p class="text-gray-600 text-sm md:text-base">Add a new product to the catalog. Requires
+                                admin privileges.</p>
+                        </div>
+                        <button onclick="showPostExample()"
+                            class="bg-indigo-600 text-white px-3 md:px-4 py-1 md:py-2 rounded-lg hover:bg-indigo-700 transition whitespace-nowrap text-sm md:text-base">
+                            Example <i class="fas fa-eye ml-1"></i>
+                        </button>
+                    </div>
+
+                    <div class="bg-gray-50 p-3 md:p-4 rounded-lg mb-3 md:mb-4">
+                        <code
+                            class="text-gray-800 text-sm md:text-base">https://decora-backend.vercel.app/api/products/add-product</code>
+                    </div>
+
+                    <div class="flex items-center text-xs md:text-sm text-gray-500 mb-3 md:mb-4">
+                        <i class="fas fa-lock mr-2"></i>
+                        <span>Requires authentication with admin role</span>
+                    </div>
+
+                    <h4 class="font-medium text-gray-700 mt-3 md:mt-4 mb-1 md:mb-2">Request Body</h4>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-2 px-3 md:px-4 border-b text-left text-sm">Field</th>
+                                    <th class="py-2 px-3 md:px-4 border-b text-left text-sm">Type</th>
+                                    <th class="py-2 px-3 md:px-4 border-b text-left text-sm">Required</th>
+                                    <th class="py-2 px-3 md:px-4 border-b text-left text-sm">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">name</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">string</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Yes</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Product name (3-100 characters)</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">price</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">number</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Yes</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Product price (positive number)</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">description</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">string</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Yes</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Detailed product description</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">category</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">string</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Yes</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Product category</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">stock</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">integer</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">No</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Initial stock quantity (default: 0)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">imageUrl</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">string</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Yes</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Main product image URL</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">images</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">array</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">No</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Additional image URLs</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">specifications</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">object</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">No</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Key-value pairs of product specs</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div id="postExample" class="hidden mt-4 md:mt-6">
+                        <h4 class="font-medium text-gray-700 mb-1 md:mb-2">Example Request</h4>
+                        <div class="bg-gray-50 p-3 md:p-4 rounded-lg response-box">
+                            <pre><code>{
+  "name": "Industrial Bookshelf",
+  "price": 179.99,
+  "description": "Rustic industrial-style bookshelf with iron frame and reclaimed wood shelves...",
+  "category": "Furniture",
+  "stock": 25,
+  "imageUrl": "https://res.cloudinary.com/.../bookshelf.jpg",
+  "images": [
+    "https://res.cloudinary.com/.../bookshelf1.jpg",
+    "https://res.cloudinary.com/.../bookshelf2.jpg"
+  ],
+  "specifications": {
+    "material": "Iron and reclaimed wood",
+    "dimensions": "60 x 30 x 12 inches",
+    "weight": "45 lbs",
+    "color": "Brown/Black",
+    "assemblyRequired": true
+  }
+}</code></pre>
+                        </div>
+
+                        <h4 class="font-medium text-gray-700 mt-6 mb-2">Example Response</h4>
+                        <div class="bg-gray-50 p-4 rounded-lg response-box">
+                            <pre><code>{
+  "success": true,
+  "message": "Product created successfully",
+  "data": {
+    "_id": "68c9dbfdd1d649814f77c07c",
+    "name": "Industrial Bookshelf",
+    "price": 179.99,
+    "description": "Rustic industrial-style bookshelf...",
+    "category": "Furniture",
+    "stock": 25,
+    "rating": 0,
+    "reviews": 0,
+    "imageUrl": "https://res.cloudinary.com/.../bookshelf.jpg",
+    "images": [
+      "https://res.cloudinary.com/.../bookshelf1.jpg",
+      "https://res.cloudinary.com/.../bookshelf2.jpg"
+    ],
+    "specifications": {
+      "material": "Iron and reclaimed wood",
+      "dimensions": "60 x 30 x 12 inches",
+      "weight": "45 lbs",
+      "color": "Brown/Black",
+      "assemblyRequired": true
+    },
+    "createdAt": "2023-06-20T14:45:00.000Z",
+    "updatedAt": "2023-06-20T14:45:00.000Z"
+  }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                               <!-- Update Product -->
+                <div id="update-product" class="mb-8 md:mb-12">
+                    <div class="flex flex-col md:flex-row md:items-start justify-between mb-3 md:mb-4 gap-2">
+                        <div>
+                            <div class="flex items-center mb-1 md:mb-2">
+                                <span class="method-put px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-mono mr-2 md:mr-3">PUT</span>
+                                <h3 class="text-lg md:text-xl font-semibold text-gray-800">Update Product</h3>
+                            </div>
+                            <p class="text-gray-600 text-sm md:text-base">Update an existing product's information. Requires admin privileges.</p>
+                        </div>
+                        <button onclick="showPutExample()"
+                            class="bg-indigo-600 text-white px-3 md:px-4 py-1 md:py-2 rounded-lg hover:bg-indigo-700 transition whitespace-nowrap text-sm md:text-base">
+                            Example <i class="fas fa-eye ml-1"></i>
+                        </button>
+                    </div>
+
+                    <div class="bg-gray-50 p-3 md:p-4 rounded-lg mb-3 md:mb-4">
+                        <code class="text-gray-800 text-sm md:text-base">https://decora-backend.vercel.app/api/products/update/{id}</code>
+                    </div>
+
+                    <div class="flex items-center text-xs md:text-sm text-gray-500 mb-3 md:mb-4">
+                        <i class="fas fa-lock mr-2"></i>
+                        <span>Requires authentication with admin role</span>
+                    </div>
+
+                    <h4 class="font-medium text-gray-700 mt-3 md:mt-4 mb-1 md:mb-2">Path Parameters</h4>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-2 px-3 md:px-4 border-b text-left text-sm">Parameter</th>
+                                    <th class="py-2 px-3 md:px-4 border-b text-left text-sm">Type</th>
+                                    <th class="py-2 px-3 md:px-4 border-b text-left text-sm">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">id</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">string</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">The ID of the product to update</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4 class="font-medium text-gray-700 mt-4 md:mt-6 mb-1 md:mb-2">Request Body</h4>
+                    <p class="text-gray-600 text-sm md:text-base mb-2 md:mb-3">Include only the fields you want to update. All fields are optional.</p>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-2 px-3 md:px-4 border-b text-left text-sm">Field</th>
+                                    <th class="py-2 px-3 md:px-4 border-b text-left text-sm">Type</th>
+                                    <th class="py-2 px-3 md:px-4 border-b text-left text-sm">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">name</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">string</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Updated product name</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">price</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">number</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Updated price</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">description</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">string</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Updated description</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">category</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">string</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Updated category</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">stock</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">integer</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Updated stock quantity</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">imageUrl</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">string</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Updated main image URL</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">images</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">array</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Updated additional images</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">specifications</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">object</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Updated specifications</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div id="putExample" class="hidden mt-4 md:mt-6">
+                        <h4 class="font-medium text-gray-700 mb-1 md:mb-2">Example Request</h4>
+                        <div class="bg-gray-50 p-3 md:p-4 rounded-lg response-box">
+                            <pre><code>{
+  "price": 189.99,
+  "stock": 30,
+  "specifications": {
+    "weight": "3.2 lbs",
+    "maxLoad": "50 lbs"
+  }
+}</code></pre>
+                        </div>
+
+                        <h4 class="font-medium text-gray-700 mt-4 md:mt-6 mb-1 md:mb-2">Example Response</h4>
+                        <div class="bg-gray-50 p-3 md:p-4 rounded-lg response-box">
+                            <pre><code>{
+  "success": true,
+  "message": "Product updated successfully",
+  "data": {
+    "_id": "67b9dbfdd1d649814f77c06b",
+    "name": "Industrial Bookshelf",
+    "price": 189.99,
+    "description": "Rustic industrial-style bookshelf...",
+    "category": "Furniture",
+    "stock": 30,
+    "specifications": {
+      "material": "Iron and reclaimed wood",
+      "dimensions": "60 x 30 x 15 inches",
+      "weight": "3.2 lbs",
+      "maxLoad": "50 lbs"
+    },
+    "updatedAt": "2023-06-20T14:45:00.000Z"
+  }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Users Section -->
+            <section id="users" class="bg-white rounded-xl shadow-sm p-6 md:p-8">
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 md:mb-6">Users API</h2>
+                <p class="text-gray-600 mb-6 md:mb-8">Manage user accounts, authentication, and authorization for your e-commerce platform.</p>
+
+                <!-- Register User -->
+                <div id="register-user" class="mb-8 md:mb-12">
+                    <div class="flex flex-col md:flex-row md:items-start justify-between mb-3 md:mb-4 gap-2">
+                        <div>
+                            <div class="flex items-center mb-1 md:mb-2">
+                                <span class="method-post px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-mono mr-2 md:mr-3">POST</span>
+                                <h3 class="text-lg md:text-xl font-semibold text-gray-800">Register User</h3>
+                            </div>
+                            <p class="text-gray-600 text-sm md:text-base">Create a new user account with email and password. Returns a JWT token for authentication.</p>
+                        </div>
+                        <button onclick="showRegisterExample()"
+                            class="bg-indigo-600 text-white px-3 md:px-4 py-1 md:py-2 rounded-lg hover:bg-indigo-700 transition whitespace-nowrap text-sm md:text-base">
+                            Example <i class="fas fa-eye ml-1"></i>
+                        </button>
+                    </div>
+
+                    <div class="bg-gray-50 p-3 md:p-4 rounded-lg mb-3 md:mb-4">
+                        <code class="text-gray-800 text-sm md:text-base">https://decora-backend.vercel.app/api/users/register</code>
+                    </div>
+
+                    <h4 class="font-medium text-gray-700 mt-3 md:mt-4 mb-1 md:mb-2">Request Body</h4>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-2 px-3 md:px-4 border-b text-left text-sm">Field</th>
+                                    <th class="py-2 px-3 md:px-4 border-b text-left text-sm">Type</th>
+                                    <th class="py-2 px-3 md:px-4 border-b text-left text-sm">Required</th>
+                                    <th class="py-2 px-3 md:px-4 border-b text-left text-sm">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">name</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">string</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Yes</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">User's full name</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">email</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">string</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Yes</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Valid email address</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">password</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">string</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Yes</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Password (min 6 characters)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div id="registerExample" class="hidden mt-4 md:mt-6">
+                        <h4 class="font-medium text-gray-700 mb-1 md:mb-2">Example Request</h4>
+                        <div class="bg-gray-50 p-3 md:p-4 rounded-lg response-box">
+                            <pre><code>{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "securepassword123"
+}</code></pre>
+                        </div>
+
+                        <h4 class="font-medium text-gray-700 mt-4 md:mt-6 mb-1 md:mb-2">Example Response</h4>
+                        <div class="bg-gray-50 p-3 md:p-4 rounded-lg response-box">
+                            <pre><code>{
+  "success": true,
+  "message": "User registered successfully",
+  "data": {
+    "user": {
+      "_id": "67b9dbfdd1d649814f77c06d",
+      "name": "John Doe",
+      "email": "john@example.com",
+      "role": "user",
+      "createdAt": "2023-06-18T09:15:00.000Z"
+    },
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Login User -->
+                <div id="login-user" class="mb-8 md:mb-12">
+                    <div class="flex flex-col md:flex-row md:items-start justify-between mb-3 md:mb-4 gap-2">
+                        <div>
+                            <div class="flex items-center mb-1 md:mb-2">
+                                <span class="method-post px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-mono mr-2 md:mr-3">POST</span>
+                                <h3 class="text-lg md:text-xl font-semibold text-gray-800">Login User</h3>
+                            </div>
+                            <p class="text-gray-600 text-sm md:text-base">Authenticate a user with email and password. Returns a JWT token for accessing protected endpoints.</p>
+                        </div>
+                        <button onclick="showLoginExample()"
+                            class="bg-indigo-600 text-white px-3 md:px-4 py-1 md:py-2 rounded-lg hover:bg-indigo-700 transition whitespace-nowrap text-sm md:text-base">
+                            Example <i class="fas fa-eye ml-1"></i>
+                        </button>
+                    </div>
+
+                    <div class="bg-gray-50 p-3 md:p-4 rounded-lg mb-3 md:mb-4">
+                        <code class="text-gray-800 text-sm md:text-base">https://decora-backend.vercel.app/api/users/login</code>
+                    </div>
+
+                    <h4 class="font-medium text-gray-700 mt-3 md:mt-4 mb-1 md:mb-2">Request Body</h4>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-2 px-3 md:px-4 border-b text-left text-sm">Field</th>
+                                    <th class="py-2 px-3 md:px-4 border-b text-left text-sm">Type</th>
+                                    <th class="py-2 px-3 md:px-4 border-b text-left text-sm">Required</th>
+                                    <th class="py-2 px-3 md:px-4 border-b text-left text-sm">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">email</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">string</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Yes</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Registered email address</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">password</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">string</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Yes</td>
+                                    <td class="py-2 px-3 md:px-4 border-b text-sm">Account password</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div id="loginExample" class="hidden mt-4 md:mt-6">
+                        <h4 class="font-medium text-gray-700 mb-1 md:mb-2">Example Request</h4>
+                        <div class="bg-gray-50 p-3 md:p-4 rounded-lg response-box">
+                            <pre><code>{
+  "email": "john@example.com",
+  "password": "securepassword123"
+}</code></pre>
+                        </div>
+
+                        <h4 class="font-medium text-gray-700 mt-4 md:mt-6 mb-1 md:mb-2">Example Response</h4>
+                        <div class="bg-gray-50 p-3 md:p-4 rounded-lg response-box">
+                            <pre><code>{
+  "success": true,
+  "message": "Login successful",
+  "data": {
+    "user": {
+      "_id": "67b9dbfdd1d649814f77c06d",
+      "name": "John Doe",
+      "email": "john@example.com",
+      "role": "user"
+    },
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Try It Out Section -->
+            <section id="try-it-out" class="bg-white rounded-xl shadow-sm p-6 md:p-8">
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 md:mb-6">Try It Out</h2>
+                <div class="prose max-w-none text-gray-600">
+                    <p>Test the Decora API endpoints directly from this documentation. Enter a URL and select a method to
+                        see the response.</p>
+
+                    <div class="mt-4 md:mt-6 space-y-4">
+                        <div>
+                            <label for="endpoint-url" class="block text-sm font-medium text-gray-700 mb-1">API
+                                Endpoint</label>
+                            <div class="flex">
+                                <input type="text" id="endpoint-url"
+                                    class="flex-1 min-w-0 block w-full px-3 py-2 rounded-l-lg border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    placeholder="https://decora-backend.vercel.app/api/products/all">
+                                <select id="http-method"
+                                    class="inline-flex items-center px-3 py-2 border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm rounded-r-lg">
+                                    <option value="GET">GET</option>
+                                    <option value="POST">POST</option>
+                                    <option value="PUT">PUT</option>
+                                    <option value="DELETE">DELETE</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div id="request-body-container" class="hidden">
+                            <label for="request-body" class="block text-sm font-medium text-gray-700 mb-1">Request
+                                Body</label>
+                            <textarea id="request-body" rows="5"
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                placeholder='{"key": "value"}'></textarea>
+                        </div>
+
+                        <div>
+                            <button onclick="sendRequest()"
+                                class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition flex items-center">
+                                <i class="fas fa-paper-plane mr-2"></i> Send Request
+                            </button>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Response</label>
+                            <div id="response-status" class="hidden mb-2">
+                                <span class="px-2 py-1 text-xs font-semibold rounded"></span>
+                            </div>
+                            <div id="response-container" class="response-box p-3 md:p-4">
+                                <p class="text-gray-500">Response will appear here...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact" class="bg-white rounded-xl shadow-sm p-6 md:p-8">
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 md:mb-6">Contact</h2>
+                <div class="prose max-w-none text-gray-600">
+                    <p>Have questions or need help integrating with the Decora API? Get in touch with our team.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mt-6 md:mt-8">
+                        <div>
+                            <h3 class="text-lg md:text-xl font-semibold text-gray-800 mb-3 md:mb-4">Developer Information</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-start">
+                                    <i class="fas fa-user mt-1 mr-3 text-indigo-600"></i>
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">Arun Patwa</h4>
+                                        <p class="text-sm text-gray-600">Full Stack Developer</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-envelope mt-1 mr-3 text-indigo-600"></i>
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">Email</h4>
+                                        <a href="mailto:arunpatwa2605@gmail.com" class="text-sm text-indigo-600 hover:text-indigo-800">arunpatwa2605@gmail.com</a>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fab fa-linkedin mt-1 mr-3 text-indigo-600"></i>
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">LinkedIn</h4>
+                                        <a href="https://linkedin.com/in/arun-patwa-581136278/" target="_blank" class="text-sm text-indigo-600 hover:text-indigo-800">linkedin.com/in/arun-patwa-581136278/</a>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fab fa-github mt-1 mr-3 text-indigo-600"></i>
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">GitHub</h4>
+                                        <a href="https://github.com/ArunPatwa26" target="_blank" class="text-sm text-indigo-600 hover:text-indigo-800">github.com/ArunPatwa26</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg md:text-xl font-semibold text-gray-800 mb-3 md:mb-4">Send a Message</h3>
+                            <form action="https://api.web3forms.com/submit" method="POST" class="space-y-4">
+                                <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">
+                                <input type="hidden" name="redirect" value="https://yourdomain.com/thank-you">
+                                
+                                <div>
+                                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Your Name</label>
+                                    <input type="text" id="name" name="name" required
+                                        class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                </div>
+                                
+                                <div>
+                                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                                    <input type="email" id="email" name="email" required
+                                        class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                </div>
+                                
+                                <div>
+                                    <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                                    <input type="text" id="subject" name="subject" required
+                                        class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                </div>
+                                
+                                <div>
+                                    <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                                    <textarea id="message" name="message" rows="4" required
+                                        class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
+                                </div>
+                                
+                                <div class="h-captcha" data-captcha="true"></div>
+                                
+                                <button type="submit"
+                                    class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition w-full">
+                                    Send Message
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 md:py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-indigo-600 text-white p-2 rounded-lg">
+                            <i class="fas fa-store text-xl"></i>
+                        </div>
+                        <h2 class="text-xl font-bold">Decora API</h2>
+                    </div>
+                    <p class="mt-2 text-gray-400 text-sm md:text-base">The complete solution for home decoration e-commerce integration.</p>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-12">
+                    <div>
+                        <h3 class="text-sm font-semibold uppercase tracking-wider mb-3">Resources</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#overview" class="text-gray-400 hover:text-white transition">Documentation</a></li>
+                            <li><a href="#try-it-out" class="text-gray-400 hover:text-white transition">API Explorer</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">API Status</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-semibold uppercase tracking-wider mb-3">Company</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">About</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Blog</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Careers</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-semibold uppercase tracking-wider mb-3">Legal</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Privacy</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Terms</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Security</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 md:mt-12 pt-6 md:pt-8 border-t border-gray-700 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2023 Decora API. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-twitter text-lg"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-github text-lg"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-linkedin text-lg"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Show/hide request body based on method
+        document.getElementById('http-method').addEventListener('change', function() {
+            const method = this.value;
+            const requestBodyContainer = document.getElementById('request-body-container');
+            
+            if (method === 'POST' || method === 'PUT') {
+                requestBodyContainer.classList.remove('hidden');
+            } else {
+                requestBodyContainer.classList.add('hidden');
+            }
+        });
+
+        // Example functions
+        function showPostExample() {
+            const example = document.getElementById('postExample');
+            example.classList.toggle('hidden');
+        }
+
+        function showPutExample() {
+            const example = document.getElementById('putExample');
+            example.classList.toggle('hidden');
+        }
+
+        function showRegisterExample() {
+            const example = document.getElementById('registerExample');
+            example.classList.toggle('hidden');
+        }
+
+        function showLoginExample() {
+            const example = document.getElementById('loginExample');
+            example.classList.toggle('hidden');
+        }
+
+        // Try endpoint function
+        function tryEndpoint(url, method) {
+            document.getElementById('endpoint-url').value = url;
+            document.getElementById('http-method').value = method;
+            
+            if (method === 'POST' || method === 'PUT') {
+                document.getElementById('request-body-container').classList.remove('hidden');
+            } else {
+                document.getElementById('request-body-container').classList.add('hidden');
+            }
+            
+            // Scroll to the Try It Out section
+            document.getElementById('try-it-out').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Send request function
+        function sendRequest() {
+            const url = document.getElementById('endpoint-url').value;
+            const method = document.getElementById('http-method').value;
+            const requestBody = document.getElementById('request-body').value;
+            const responseContainer = document.getElementById('response-container');
+            const responseStatus = document.getElementById('response-status');
+            
+            if (!url) {
+                alert('Please enter an API endpoint URL');
+                return;
+            }
+            
+            responseContainer.innerHTML = '<p class="text-gray-500">Sending request...</p>';
+            responseStatus.classList.add('hidden');
+            
+            const options = {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            };
+            
+            if ((method === 'POST' || method === 'PUT') && requestBody) {
+                try {
+                    JSON.parse(requestBody); // Validate JSON
+                    options.body = requestBody;
+                } catch (e) {
+                    alert('Invalid JSON in request body');
+                    return;
+                }
+            }
+            
+            fetch(url, options)
+                .then(response => {
+                    const statusClass = response.ok ? 'response-success' : 'response-error';
+                    responseStatus.className = 'hidden mb-2';
+                    responseStatus.classList.remove('hidden');
+                    responseStatus.classList.add(statusClass);
+                    
+                    const statusSpan = responseStatus.querySelector('span');
+                    statusSpan.textContent = `${response.status} ${response.statusText}`;
+                    statusSpan.classList.add(statusClass === 'response-success' ? 'bg-green-100' : 'bg-red-100');
+                    
+                    return response.json().catch(() => {
+                        return { message: 'Non-JSON response received' };
+                    });
+                })
+                .then(data => {
+                    responseContainer.innerHTML = `<pre><code>${JSON.stringify(data, null, 2)}</code></pre>`;
+                })
+                .catch(error => {
+                    responseContainer.innerHTML = `<p class="text-red-500">Error: ${error.message}</p>`;
+                });
+        }
+
+        // Initialize Web3Forms
+        document.addEventListener('DOMContentLoaded', function() {
+            // You would typically initialize hCaptcha here
+            // For Web3Forms, you need to replace YOUR_WEB3FORMS_ACCESS_KEY with your actual key
+            console.log('Document loaded, ready for form submission');
+        });
+    </script>
+    <script src="https://web3forms.com/client/script.js" async defer></script>
+</body>
+
+</html>
